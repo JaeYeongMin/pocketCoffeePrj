@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="MemberDAO">
+
+	<resultMap id="MemberDAO.detail" type="map">
+		<result property="MEMBER_SEQ"   column="MEMBER_SEQ"></result>
+		<result property="MEMBER_ID"    column="MEMBER_ID" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_PW"    column ="MEMBER_PW" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_NAME"  column ="MEMBER_NAME" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_NICK"  column ="MEMBER_NICK" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_GRADE" column ="MEMBER_GRADE" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_HPNUM" column ="MEMBER_HPNUM" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_ADDR" column ="MEMBER_ADDR" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_GENDER" column ="MEMBER_GENDER" javaType="string" jdbcType="VARCHAR"/>
+		<result property="DB_STATUS" column ="DB_STATUS" javaType="string" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	
+	<resultMap id="MemberDAO.login" type="map">
+		<result property="MEMBER_SEQ"   column="MEMBER_SEQ"></result>
+		<result property="LOGIN_RESULT" column="LOGIN_RESULT"></result>
+		<result property="MEMBER_ID"    column="MEMBER_ID" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_PW"    column ="MEMBER_PW" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_NAME"  column ="MEMBER_NAME" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_NICK"  column ="MEMBER_NICK" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_GRADE" column ="MEMBER_GRADE" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_HPNUM" column ="MEMBER_HPNUM" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_ADDR" column ="MEMBER_ADDR" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_GENDER" column ="MEMBER_GENDER" javaType="string" jdbcType="VARCHAR"/>
+		<result property="DB_STATUS" column ="DB_STATUS" javaType="string" jdbcType="VARCHAR"/>
+	</resultMap>
+  
+	<select id="getMemberDetail" parameterType="map" resultMap="MemberDAO.detail" >
+	    SELECT  A.MEMBER_SEQ
+			  , A.MEMBER_ID
+			  , A.MEMBER_PW
+			  , A.MEMBER_NAME
+			  , A.MEMBER_NICK
+			  , A.MEMBER_GRADE
+			  , A.MEMBER_HPNUM
+			  , A.MEMBER_ADDR
+			  , A.MEMBER_GENDER
+			  , A.DB_STATUS
+			  , A.INPUT_DATE
+			  , A.INPUT_ID
+			  , A.UPDATE_DATE
+			  , A.UPDATE_ID
+	    FROM TB_MEMBER A
+	    WHERE A.DB_STATUS = 'A'
+	    	AND A.MEMBER_SEQ = #{MEMBER_SEQ}
+	</select>
+
+
+
+	<select id="loginMember" parameterType="map" resultMap="MemberDAO.login" >
+		SELECT (CASE WHEN COUNT(MEMBER_SEQ) = 1 THEN 'SUCC' ELSE 'FAIL' END) AS LOGIN_RESULT
+			  , A.MEMBER_SEQ
+			  , A.MEMBER_ID
+			  , A.MEMBER_PW
+			  , A.MEMBER_NAME
+			  , A.MEMBER_NICK
+			  , A.MEMBER_GRADE
+			  , A.MEMBER_HPNUM
+			  , A.MEMBER_ADDR
+			  , A.MEMBER_GENDER
+			  , A.DB_STATUS
+			  , A.INPUT_DATE
+			  , A.INPUT_ID
+			  , A.UPDATE_DATE
+			  , A.UPDATE_ID
+		  FROM TB_MEMBER A
+	     WHERE A.DB_STATUS = 'A'
+	       AND A.MEMBER_ID = #{MEMBER_ID}
+	       AND A.MEMBER_PW = #{MEMBER_PW}
+	</select>
+
+
+
+	<insert id="createMember" parameterType="map">
+	    <selectKey keyProperty="MEMBER_SEQ" resultType="string" order="BEFORE">
+			SELECT MAX(MEMBER_SEQ) + 1 AS MEMBER_SEQ FROM TB_MEMBER A WHERE A.DB_STATUS = 'A'
+ 	    </selectKey>
+		INSERT INTO TB_MEMBER(
+		      MEMBER_SEQ
+			, MEMBER_ID
+			, MEMBER_PW
+			, MEMBER_NAME
+			, MEMBER_NICK
+			, MEMBER_GRADE
+			, MEMBER_HPNUM
+			, MEMBER_ADDR
+			, MEMBER_GENDER
+			, DB_STATUS
+			, INPUT_DATE
+		) VALUES(
+		      #{MEMBER_SEQ,jdbcType=VARCHAR}
+			, #{MEMBER_ID,jdbcType=VARCHAR}
+			, #{MEMBER_PW,jdbcType=VARCHAR}
+			, #{MEMBER_NAME,jdbcType=VARCHAR}
+			, #{MEMBER_NICK,jdbcType=VARCHAR}
+			, 'COCONUT'
+			, #{MEMBER_HPNUM,jdbcType=VARCHAR}
+			, #{MEMBER_ADDR,jdbcType=VARCHAR}
+			, #{MEMBER_GENDER,jdbcType=VARCHAR}
+			, 'A'
+			, SYSDATE()
+		)
+	</insert>
+
+
+
+</mapper>
