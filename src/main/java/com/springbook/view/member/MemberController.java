@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -232,5 +233,17 @@ public class MemberController{
         return resMap;  // View 이름 리턴
     }
     
+    
+    
+
+    
+    // 회원 상세보기
+    //@RequestMapping("/member/getTest.do")
+    @RequestMapping(value = "/member/getTest.do" , method=RequestMethod.POST)
+    public void getTest(@RequestBody String inputJSON, ModelAndView mav, HttpServletRequest request) throws Exception {
+    	String test = "test";
+    	System.out.println(test);
+		
+    }
     
 }
