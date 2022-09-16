@@ -29,11 +29,7 @@ public class ProductController{
     @Autowired
     private ProductService productService;
     
-   
 
-    
-    
-    
     // 상품리스트조회
     @RequestMapping("/product/getPrdList.do")
     public @ResponseBody HashMap<String, Object> getPrdList(@RequestBody String inputJSON, ModelAndView mav, HttpServletRequest request) throws Exception {
