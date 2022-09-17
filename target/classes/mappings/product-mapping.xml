@@ -38,7 +38,7 @@
 			, A.INPUT_DATE
 	    FROM TB_PRODUCT A
 	    WHERE A.DB_STATUS = 'A'
-	    
+	    	      	
 	      <if test="PRD_CATE != null and PRD_CATE != '' ">
 	      	AND PRD_CATE = #{PRD_CATE}
 	      </if>
@@ -47,14 +47,14 @@
 	      </if>
 	      <if test="PRD_TYPE != null and PRD_TYPE != '' ">
 	      	AND PRD_TYPE = #{PRD_TYPE}
-	      </if> 
-	      <if test="PRD_NAME_KR != null and PRD_NAME_KR != '' ">
-	      	AND PRD_NAME_KR LIKE '%'||#{PRD_NAME_KR}||'%'
+	      </if>
+		  <if test="PRD_NAME_KR != null and PRD_NAME_KR != '' ">
+			AND PRD_NAME_KR LIKE CONCAT('%',#{PRD_NAME_KR},'%')
 	      </if> 
 	      <if test="PRD_NAME_EN != null and PRD_NAME_EN != '' ">
-	      	AND PRD_NAME_EN LIKE '%'||#{PRD_NAME_EN}||'%'
+	      	AND PRD_NAME_EN LIKE CONCAT('%',#{PRD_NAME_EN},'%')
 	      </if> 
-	      
+
 	</select>
 
 
