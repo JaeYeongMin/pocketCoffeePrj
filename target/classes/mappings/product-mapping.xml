@@ -49,7 +49,7 @@
 	      	AND PRD_TYPE = #{PRD_TYPE}
 	      </if>
 		  <if test="PRD_NAME_KR != null and PRD_NAME_KR != '' ">
-			AND PRD_NAME_KR LIKE CONCAT('%',#{PRD_NAME_KR},'%')
+			AND (PRD_NAME_KR LIKE CONCAT('%',#{PRD_NAME_KR},'%') OR PRD_NAME_EN LIKE CONCAT('%',#{PRD_NAME_KR},'%'))
 	      </if> 
 	      <if test="PRD_NAME_EN != null and PRD_NAME_EN != '' ">
 	      	AND PRD_NAME_EN LIKE CONCAT('%',#{PRD_NAME_EN},'%')
