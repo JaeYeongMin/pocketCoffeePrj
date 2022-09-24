@@ -20,7 +20,7 @@ public class MemberDAO{
     // 회원등록
     public String createMember(HashMap<String,Object> paramMap) {
     	String member_seq = null;
-    	mybatis.insert("MemberDAO.createMember",paramMap);
+    	mybatis.insert("MemberSQL.createMember",paramMap);
     	member_seq = paramMap.get("MEMBER_SEQ").toString();
         return member_seq;
          
@@ -28,7 +28,7 @@ public class MemberDAO{
     
     // 로그인
     public HashMap<String, Object> loginMember(HashMap<String,Object> paramMap) {
-        return mybatis.selectOne("MemberDAO.loginMember",paramMap);
+        return mybatis.selectOne("MemberSQL.loginMember",paramMap);
          
     }
 
@@ -41,7 +41,7 @@ public class MemberDAO{
     
     // 회원 상세 조회
     public HashMap<String, Object> getMemberDetail(HashMap<String, Object> paramMap) {
-        return  (HashMap<String, Object>) mybatis.selectOne("MemberDAO.getMemberDetail",paramMap);
+        return  (HashMap<String, Object>) mybatis.selectOne("MemberSQL.getMemberDetail",paramMap);
     }
     
     

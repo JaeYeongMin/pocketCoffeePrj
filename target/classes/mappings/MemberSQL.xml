@@ -3,9 +3,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="MemberDAO">
+<mapper namespace="MemberSQL">
 
-	<resultMap id="MemberDAO.detail" type="map">
+	<resultMap id="MemberSQL.detail" type="map">
 		<result property="MEMBER_SEQ"   column="MEMBER_SEQ"></result>
 		<result property="MEMBER_ID"    column="MEMBER_ID" javaType="string" jdbcType="VARCHAR"/>
 		<result property="MEMBER_PW"    column ="MEMBER_PW" javaType="string" jdbcType="VARCHAR"/>
@@ -19,7 +19,7 @@
 	</resultMap>
 	
 	
-	<resultMap id="MemberDAO.login" type="map">
+	<resultMap id="MemberSQL.login" type="map">
 		<result property="MEMBER_SEQ"   column="MEMBER_SEQ"></result>
 		<result property="LOGIN_RESULT" column="LOGIN_RESULT"></result>
 		<result property="MEMBER_ID"    column="MEMBER_ID" javaType="string" jdbcType="VARCHAR"/>
@@ -33,7 +33,7 @@
 		<result property="DB_STATUS" column ="DB_STATUS" javaType="string" jdbcType="VARCHAR"/>
 	</resultMap>
   
-	<select id="getMemberDetail" parameterType="map" resultMap="MemberDAO.detail" >
+	<select id="getMemberDetail" parameterType="map" resultMap="MemberSQL.detail" >
 	    SELECT  A.MEMBER_SEQ
 			  , A.MEMBER_ID
 			  , A.MEMBER_PW
@@ -55,7 +55,7 @@
 
 
 
-	<select id="loginMember" parameterType="map" resultMap="MemberDAO.login" >
+	<select id="loginMember" parameterType="map" resultMap="MemberSQL.login" >
 		SELECT (CASE WHEN COUNT(MEMBER_SEQ) = 1 THEN 'SUCC' ELSE 'FAIL' END) AS LOGIN_RESULT
 			  , A.MEMBER_SEQ
 			  , A.MEMBER_ID

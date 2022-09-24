@@ -19,7 +19,7 @@ public class ProductDAO{
 
     // 회원 상세 조회
     public List<HashMap<String, Object>> getPrdList(HashMap<String, Object> paramMap) {
-        return  mybatis.selectList("ProductDAO.getPrdList",paramMap);
+        return  mybatis.selectList("ProductSQL.getPrdList",paramMap);
     }
     
     

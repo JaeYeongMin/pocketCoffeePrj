@@ -19,7 +19,7 @@ public class OrderDAO{
 
     // 회원 상세 조회
     public List<HashMap<String, Object>> getPrdList(HashMap<String, Object> paramMap) {
-        return  mybatis.selectList("OrderDAO.getPrdList",paramMap);
+        return  mybatis.selectList("OrderSQL.getPrdList",paramMap);
     }
     
 
@@ -27,7 +27,7 @@ public class OrderDAO{
     // 주문등록
     public String createOrder(HashMap<String,Object> paramMap) {
     	String member_seq = null;
-    	mybatis.insert("OrderDAO.createOrder",paramMap);
+    	mybatis.insert("OrderSQL.createOrder",paramMap);
     	member_seq = paramMap.get("MEMBER_SEQ").toString();
         return member_seq;
          

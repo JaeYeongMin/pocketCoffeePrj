@@ -3,9 +3,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="ProductDAO">
+<mapper namespace="ProductSQL">
 
-	<resultMap id="ProductDAO.getPrdList" type="map">
+	<resultMap id="ProductSQL.getPrdList" type="map">
 		<result property="PRD_SEQ"   column="PRD_SEQ"></result>
 		<result property="PRD_CATE"    column="PRD_CATE" javaType="string" jdbcType="VARCHAR"/>
 		<result property="PRD_CATE_SUB"    column ="PRD_CATE_SUB" javaType="string" jdbcType="VARCHAR"/>
@@ -22,7 +22,7 @@
 	</resultMap>
 	
   
-	<select id="getPrdList" parameterType="map" resultMap="ProductDAO.getPrdList" >
+	<select id="getPrdList" parameterType="map" resultMap="ProductSQL.getPrdList" >
 	    SELECT A.PRD_SEQ
 			, A.PRD_CATE
 			, A.PRD_CATE_SUB
