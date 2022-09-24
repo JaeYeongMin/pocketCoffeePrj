@@ -6,7 +6,7 @@ public interface BoardService {
 
     // CRUD 기능의 메소드 구현
     // 글등록
-    void insertBoard(BoardVO vo);
+    void insertBoard(BoardVO vo);   
 
     // 글수정
     void updateBoard(BoardVO vo);
