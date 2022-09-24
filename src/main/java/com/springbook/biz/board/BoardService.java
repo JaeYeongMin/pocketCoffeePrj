@@ -9,7 +9,7 @@ public interface BoardService {
     void insertBoard(BoardVO vo);
 
     // 글수정
-    void updateBoard(BoardVO vo);
+    void updateBoard(BoardVO vo); 
 
     // 글 삭제
     void deleteBoard(BoardVO vo);
