@@ -1,4 +1,4 @@
-package com.springbook.view.product;
+package com.springbook.view.order;
 
 
 import java.util.ArrayList;
@@ -18,21 +18,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import com.springbook.biz.product.ProductService;
+import com.springbook.biz.order.OrderService;
 import com.springbook.view.common.StringUtil;
 
 
 
 @Controller
-public class ProductController{
+public class OrderController{
     
     @Autowired
-    private ProductService productService;
+    private OrderService orderService;
     
 
-    // 상품리스트조회
-    @RequestMapping("/product/getPrdList.do")
-    public @ResponseBody HashMap<String, Object> getPrdList(@RequestBody String inputJSON, ModelAndView mav, HttpServletRequest request) throws Exception {
+    // 주문등록
+    @RequestMapping("/order/createOrder.do")
+    public @ResponseBody HashMap<String, Object> createOrder(@RequestBody String inputJSON, ModelAndView mav, HttpServletRequest request) throws Exception {
     	HashMap<String, Object> resMap = new HashMap<String, Object>();
     	HashMap<String, Object> resHead = new HashMap<String, Object>();
     	HashMap<String, Object> ainfo = new HashMap<String, Object>();
@@ -46,7 +46,7 @@ public class ProductController{
 		String retnCode = null;
 		try {
 			
-			prdList = productService.getPrdList(reqMap);
+			String result = orderService.createOrder(reqMap);
 
 			if(prdList.size() < 1 || prdList == null) {
 				ainfo.put("PRD_CATE_SUB", null);

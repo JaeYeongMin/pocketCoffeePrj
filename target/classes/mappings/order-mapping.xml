@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="OrderDAO">
+
+	<resultMap id="OrderDAO.getPrdList" type="map">
+		<result property="PRD_SEQ"   column="PRD_SEQ"></result>
+		<result property="PRD_CATE"    column="PRD_CATE" javaType="string" jdbcType="VARCHAR"/>
+		<result property="PRD_CATE_SUB"    column ="PRD_CATE_SUB" javaType="string" jdbcType="VARCHAR"/>
+		<result property="PRD_TYPE"  column ="PRD_TYPE" javaType="string" jdbcType="VARCHAR"/>
+		<result property="PRD_NAME_KR"  column ="PRD_NAME_KR" javaType="string" jdbcType="VARCHAR"/>
+		<result property="PRD_NAME_EN"  column ="PRD_NAME_EN" javaType="string" jdbcType="VARCHAR"/>
+		<result property="PRD_PRICE"  column ="PRD_PRICE" javaType="string" jdbcType="VARCHAR"/>
+		<result property="PRD_CNT" column ="PRD_CNT" javaType="string" jdbcType="VARCHAR"/>
+		<result property="PRD_NOTICE" column ="PRD_NOTICE" javaType="string" jdbcType="VARCHAR"/>
+		<result property="PRD_IMG" column ="PRD_IMG" javaType="string" jdbcType="VARCHAR"/>
+		<result property="INPUT_ID" column ="INPUT_ID" javaType="string" jdbcType="VARCHAR"/>
+		<result property="INPUT_DATE" column ="INPUT_DATE" javaType="string" jdbcType="VARCHAR"/>
+		<result property="DB_STATUS" column ="DB_STATUS" javaType="string" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+  
+	<select id="getPrdList" parameterType="map" resultMap="OrderDAO.getPrdList" >
+	    SELECT A.PRD_SEQ
+			, A.PRD_CATE
+			, A.PRD_CATE_SUB
+			, A.PRD_TYPE
+			, A.PRD_NAME_KR
+			, A.PRD_NAME_EN
+			, A.PRD_PRICE
+			, A.PRD_CNT
+			, A.PRD_NOTICE
+			, A.PRD_IMG
+			, A.DB_STATUS
+			, A.INPUT_ID
+			, A.INPUT_DATE
+	    FROM TB_PRODUCT A
+	    WHERE A.DB_STATUS = 'A'
+	    	      	
+	      <if test="PRD_CATE != null and PRD_CATE != '' ">
+	      	AND PRD_CATE = #{PRD_CATE}
+	      </if>
+	      <if test="PRD_CATE_SUB != null and PRD_CATE_SUB != '' ">
+	      	AND PRD_CATE_SUB = #{PRD_CATE_SUB}
+	      </if>
+	      <if test="PRD_TYPE != null and PRD_TYPE != '' ">
+	      	AND PRD_TYPE = #{PRD_TYPE}
+	      </if>
+		  <if test="PRD_NAME_KR != null and PRD_NAME_KR != '' ">
+			AND PRD_NAME_KR LIKE CONCAT('%',#{PRD_NAME_KR},'%')
+	      </if> 
+	      <if test="PRD_NAME_EN != null and PRD_NAME_EN != '' ">
+	      	AND PRD_NAME_EN LIKE CONCAT('%',#{PRD_NAME_EN},'%')
+	      </if> 
+
+	</select>
+
+
+
+
+
+</mapper>
