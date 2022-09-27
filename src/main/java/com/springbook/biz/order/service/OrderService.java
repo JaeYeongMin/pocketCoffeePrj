@@ -12,7 +12,7 @@ public interface OrderService {
 	
     
     // 주문등록
-	String createOrder(HashMap<String,Object> paramMap);
+    HashMap<String,Object> createOrder(HashMap<String,Object> paramMap);
 	
 
 }

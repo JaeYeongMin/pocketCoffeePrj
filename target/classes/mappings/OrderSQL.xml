@@ -5,59 +5,123 @@
 
 <mapper namespace="OrderSQL">
 
-	<resultMap id="OrderSQL.getPrdList" type="map">
-		<result property="PRD_SEQ"   column="PRD_SEQ"></result>
-		<result property="PRD_CATE"    column="PRD_CATE" javaType="string" jdbcType="VARCHAR"/>
-		<result property="PRD_CATE_SUB"    column ="PRD_CATE_SUB" javaType="string" jdbcType="VARCHAR"/>
-		<result property="PRD_TYPE"  column ="PRD_TYPE" javaType="string" jdbcType="VARCHAR"/>
-		<result property="PRD_NAME_KR"  column ="PRD_NAME_KR" javaType="string" jdbcType="VARCHAR"/>
-		<result property="PRD_NAME_EN"  column ="PRD_NAME_EN" javaType="string" jdbcType="VARCHAR"/>
-		<result property="PRD_PRICE"  column ="PRD_PRICE" javaType="string" jdbcType="VARCHAR"/>
-		<result property="PRD_CNT" column ="PRD_CNT" javaType="string" jdbcType="VARCHAR"/>
-		<result property="PRD_NOTICE" column ="PRD_NOTICE" javaType="string" jdbcType="VARCHAR"/>
-		<result property="PRD_IMG" column ="PRD_IMG" javaType="string" jdbcType="VARCHAR"/>
-		<result property="INPUT_ID" column ="INPUT_ID" javaType="string" jdbcType="VARCHAR"/>
-		<result property="INPUT_DATE" column ="INPUT_DATE" javaType="string" jdbcType="VARCHAR"/>
-		<result property="DB_STATUS" column ="DB_STATUS" javaType="string" jdbcType="VARCHAR"/>
+	<resultMap id="OrderSQL.round" type="map">
+		<result property="ORDER_ROUND"    column="ORDER_ROUND" javaType="string" jdbcType="VARCHAR"/>
+		<result property="ORDER_DATE"    column ="ORDER_DATE" javaType="string" jdbcType="VARCHAR"/>
 	</resultMap>
 	
-  
-	<select id="getPrdList" parameterType="map" resultMap="OrderSQL.getPrdList" >
-	    SELECT A.PRD_SEQ
-			, A.PRD_CATE
-			, A.PRD_CATE_SUB
-			, A.PRD_TYPE
-			, A.PRD_NAME_KR
-			, A.PRD_NAME_EN
-			, A.PRD_PRICE
-			, A.PRD_CNT
-			, A.PRD_NOTICE
-			, A.PRD_IMG
-			, A.DB_STATUS
-			, A.INPUT_ID
-			, A.INPUT_DATE
-	    FROM TB_PRODUCT A
-	    WHERE A.DB_STATUS = 'A'
-	    	      	
-	      <if test="PRD_CATE != null and PRD_CATE != '' ">
-	      	AND PRD_CATE = #{PRD_CATE}
-	      </if>
-	      <if test="PRD_CATE_SUB != null and PRD_CATE_SUB != '' ">
-	      	AND PRD_CATE_SUB = #{PRD_CATE_SUB}
-	      </if>
-	      <if test="PRD_TYPE != null and PRD_TYPE != '' ">
-	      	AND PRD_TYPE = #{PRD_TYPE}
-	      </if>
-		  <if test="PRD_NAME_KR != null and PRD_NAME_KR != '' ">
-			AND PRD_NAME_KR LIKE CONCAT('%',#{PRD_NAME_KR},'%')
-	      </if> 
-	      <if test="PRD_NAME_EN != null and PRD_NAME_EN != '' ">
-	      	AND PRD_NAME_EN LIKE CONCAT('%',#{PRD_NAME_EN},'%')
-	      </if> 
-
+	<select id="getOrderRound" parameterType="map" resultMap="OrderSQL.round">
+		SELECT IFNULL(MAX(ORDER_ROUND) + 1,0)  AS ORDER_ROUND
+			, DATE_FORMAT(NOW(), '%Y%m%d') AS ORDER_DATE 
+		FROM TB_ORDER_MASTER 
+		WHERE MEMBER_SEQ = #{MEMBER_SEQ,jdbcType=VARCHAR}
+	      AND ORDER_DATE = DATE_FORMAT(NOW(), '%Y%m%d')
 	</select>
 
 
+
+
+
+	<resultMap id="OrderSQL.getOrderMasterList" type="map">
+		<result property="ORDER_SEQ"    column="ORDER_SEQ" javaType="string" jdbcType="VARCHAR"/>
+		<result property="ORDER_ROUND"    column="ORDER_ROUND" javaType="string" jdbcType="VARCHAR"/>
+		<result property="ORDER_DATE"    column ="ORDER_DATE" javaType="string" jdbcType="VARCHAR"/>
+		<result property="MEMBER_NICK"    column ="MEMBER_NICK" javaType="string" jdbcType="VARCHAR"/>
+		
+	</resultMap>
+	
+	<select id="getOrderMasterList" parameterType="map" resultMap="OrderSQL.getOrderMasterList">
+		SELECT (SELECT MEMBER_NICK FROM TB_MEMBER WHERE DB_STATUS ='A' AND MEMBER_SEQ = '1') AS MEMBER_NICK
+		    , A.ORDER_DATE
+		    , A.ORDER_SEQ
+		    , A.ORDER_ROUND
+		FROM TB_ORDER_MASTER A
+		WHERE ORDER_SEQ = #{ORDER_SEQ,jdbcType=VARCHAR}
+		  AND ORDER_STATUS ='ORDA01'
+		  AND ORDER_DATE = #{ORDER_DATE,jdbcType=VARCHAR}
+		  AND ORDER_ROUND = #{ORDER_ROUND,jdbcType=VARCHAR}
+	</select>
+
+
+
+
+	<resultMap id="OrderSQL.getOrderDetailList" type="map">
+		<result property="ORDER_TYPE"    column="ORDER_TYPE" javaType="string" jdbcType="VARCHAR"/>
+		<result property="PRD_NAME_KR"   column="PRD_NAME_KR" javaType="string" jdbcType="VARCHAR"/>
+		<result property="PRD_NAME_EN"   column ="PRD_NAME_EN" javaType="string" jdbcType="VARCHAR"/>
+		<result property="PRD_PRICE"     column ="PRD_PRICE" javaType="string" jdbcType="VARCHAR"/>
+		<result property="ORDER_SIZE"    column="ORDER_SIZE" javaType="string" jdbcType="VARCHAR"/>
+		<result property="ORDER_SHOT"    column="ORDER_SHOT" javaType="string" jdbcType="VARCHAR"/>
+		<result property="ORDER_CNT"    column="ORDER_CNT" javaType="string" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	
+	
+	
+	<select id="getOrderDetailList" parameterType="map" resultMap="OrderSQL.getOrderDetailList">
+		SELECT ORDER_TYPE 
+		     , PRD_SEQ 
+		     , (SELECT PRD_NAME_KR  FROM TB_PRODUCT WHERE DB_STATUS = 'A' AND PRD_SEQ = A.PRD_SEQ ) AS PRD_NAME_KR
+		     , (SELECT PRD_NAME_EN  FROM TB_PRODUCT WHERE DB_STATUS = 'A' AND PRD_SEQ = A.PRD_SEQ ) AS PRD_NAME_EN
+		     , (SELECT PRD_PRICE  FROM TB_PRODUCT WHERE DB_STATUS = 'A' AND PRD_SEQ = A.PRD_SEQ ) AS PRD_PRICE
+		     , ORDER_SHOT
+		     , ORDER_SIZE
+		     , ORDER_CNT
+		FROM TB_ORDER_DETAIL A
+		WHERE ORDER_SEQ = #{ORDER_SEQ,jdbcType=VARCHAR}
+		  AND MEMBER_SEQ = #{MEMBER_SEQ,jdbcType=VARCHAR}
+	</select>
+
+
+
+
+	<insert id="createOrderMaster" parameterType="map">
+	    <selectKey keyProperty="ORDER_SEQ" resultType="string" order="AFTER">
+			SELECT MAX(ORDER_SEQ) AS ORDER_SEQ FROM TB_ORDER_MASTER A
+ 	    </selectKey>
+		INSERT INTO TB_ORDER_MASTER(
+	          MEMBER_SEQ
+	        , ORDER_SECT
+			, ORDER_DATE
+			, ORDER_ROUND
+			, INPUT_DATE
+			, INPUT_ID
+		) VALUES(
+		      #{MEMBER_SEQ,jdbcType=VARCHAR}
+		    , #{ORDER_SECT,jdbcType=VARCHAR} 
+			, #{ORDER_DATE,jdbcType=VARCHAR}
+			, #{ORDER_ROUND,jdbcType=VARCHAR}
+			, SYSDATE()
+			, (SELECT MEMBER_ID FROM TB_MEMBER WHERE DB_STATUS ='A' AND MEMBER_SEQ = #{MEMBER_SEQ,jdbcType=VARCHAR})
+		)
+	</insert>
+
+
+
+
+	<insert id="createOrderDetail" parameterType="map">
+		INSERT INTO TB_ORDER_DETAIL(
+			  ORDER_SEQ
+			, MEMBER_SEQ
+			, PRD_SEQ
+			, ORDER_TYPE
+			, ORDER_SHOT
+			, ORDER_SIZE
+			, ORDER_CNT
+			, INPUT_DATE
+			, INPUT_ID
+		) VALUES(
+			  #{ORDER_SEQ,jdbcType=VARCHAR}
+			, #{MEMBER_SEQ,jdbcType=VARCHAR}
+			, #{PRD_SEQ,jdbcType=VARCHAR}
+			, #{ORDER_TYPE,jdbcType=VARCHAR}
+			, #{ORDER_SHOT,jdbcType=VARCHAR}
+			, #{ORDER_SIZE,jdbcType=VARCHAR}
+			, #{ORDER_CNT,jdbcType=VARCHAR}
+			, SYSDATE()
+			, (SELECT MEMBER_ID FROM TB_MEMBER WHERE DB_STATUS ='A' AND MEMBER_SEQ = #{MEMBER_SEQ,jdbcType=VARCHAR})
+		)
+	</insert>
 
 
 

@@ -29,15 +29,43 @@ public class OrderController{
     @Autowired
     private OrderService orderService;
     
+    
+    
+/*
+
+{
+  "REQ_BODY" : {
+       "MEMBER_SEQ" : 1
+      ,"ORD_SECT" : "IN"
+      ,"ORDER_LIST" :[
+          { 
+              "PRD_SEQ" : 1
+            , "ORD_CNT" : 2
+            , "ORD_SHOT" : 2
+            , "ORD_TYPE" : "ICE"
+            , "ORD_SIZE" : "GRANDE"
+          }, {
+              "PRD_SEQ" : 2
+            , "ORD_CNT" : 1
+            , "ORD_SHOT" : 2
+            , "ORD_TYPE" : "ICE"
+            , "ORD_SIZE" : "GRANDE"
+          }
+      ]
+  }
+}
+
+  
+  
+*/  
 
     // 주문등록
     @RequestMapping("/order/createOrder.do")
     public @ResponseBody HashMap<String, Object> createOrder(@RequestBody String inputJSON, ModelAndView mav, HttpServletRequest request) throws Exception {
     	HashMap<String, Object> resMap = new HashMap<String, Object>();
     	HashMap<String, Object> resHead = new HashMap<String, Object>();
-    	HashMap<String, Object> ainfo = new HashMap<String, Object>();
-    	List<HashMap<String, Object>> prdList = new ArrayList<HashMap<String, Object>>();
     	HashMap<String, Object> resBody = new HashMap<String, Object>();
+    	HashMap<String, Object> resultMap =  new HashMap<String, Object>();
 		// JSON을 HashMap으로 변환해준다.
     	HashMap<String,Object> paramMap = (HashMap<String,Object>) new ObjectMapper().readValue(inputJSON, Map.class);
     	HashMap<String, Object> reqMap = (HashMap<String, Object>) paramMap.get("REQ_BODY");
@@ -46,30 +74,18 @@ public class OrderController{
 		String retnCode = null;
 		try {
 			
-			String result = orderService.createOrder(reqMap);
+			ArrayList<HashMap<String,Object>> orderList = (ArrayList<HashMap<String, Object>>) reqMap.get("ORDER_LIST");
+			
+			
+			// 주문 리스트 가져오기
+			if(orderList.size() > 0) {
 
-			if(prdList.size() < 1 || prdList == null) {
-				ainfo.put("PRD_CATE_SUB", null);
-				ainfo.put("PRD_NAME_KR", null);
-				ainfo.put("INPUT_ID", null);
-				ainfo.put("PRD_CNT", null);
-				ainfo.put("PRD_SEQ", null);
-				ainfo.put("PRD_PRICE", null);
-				ainfo.put("DB_STATUS", null);
-				ainfo.put("PRD_NAME_EN", null);
-				ainfo.put("PRD_CATE", null);
-				ainfo.put("PRD_NOTICE", null);
-				ainfo.put("PRD_IMG", null);
-				ainfo.put("PRD_TYPE", null);
-				
-				prdList.add(ainfo);
-				resBody.put("PRD_LIST", prdList);
-				retnMent = "상품리스트가없습니다.";
-				retnCode = "200";
+				resBody = orderService.createOrder(reqMap);
+				resHead.put("RETN_CODE", "200");
+				resHead.put("RETN_MENT", "성공");
 			}else {
-				resBody.put("PRD_LIST", prdList);
-				retnMent = "성공";
-				retnCode = "200";
+				retnMent = "주문메뉴가 없습니다.";
+				retnCode = "999";
 			}
 			
 
@@ -78,7 +94,6 @@ public class OrderController{
 			retnCode = "999";
 			resBody = null;
 		} finally {
-			
 			resHead.put("RETN_CODE", retnCode);
 			resHead.put("RETN_MENT", retnMent);
 		}

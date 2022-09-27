@@ -22,9 +22,9 @@ public class OrderServiceImpl implements OrderService {
     
 
 
-    // 회원등록 
-    public String createOrder(HashMap<String,Object> paramMap) {
-    	return orderDAO.createOrder(paramMap);  
+    // 주문등록
+    public HashMap<String,Object> createOrder(HashMap<String,Object> paramMap) {
+    	return orderDAO.createOrder(paramMap);
     }
 
 }
