@@ -31,7 +31,7 @@
 	</resultMap>
 	
 	<select id="getOrderMasterList" parameterType="map" resultMap="OrderSQL.getOrderMasterList">
-		SELECT (SELECT MEMBER_NICK FROM TB_MEMBER WHERE DB_STATUS ='A' AND MEMBER_SEQ = '1') AS MEMBER_NICK
+		SELECT (SELECT MEMBER_NICK FROM TB_MEMBER WHERE DB_STATUS ='A' AND MEMBER_SEQ = #{MEMBER_SEQ,jdbcType=VARCHAR}) AS MEMBER_NICK
 		    , A.ORDER_DATE
 		    , A.ORDER_SEQ
 		    , A.ORDER_ROUND
