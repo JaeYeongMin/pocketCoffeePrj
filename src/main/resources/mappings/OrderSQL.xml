@@ -5,6 +5,25 @@
 
 <mapper namespace="OrderSQL">
 
+
+
+	<resultMap id="OrderSQL.getOrderList" type="map">
+		<result property="ORDER_SEQ"    column="ORDER_SEQ" javaType="string" jdbcType="VARCHAR"/>
+		<result property="ORDER_DATE"    column="ORDER_DATE" javaType="string" jdbcType="VARCHAR"/>
+		
+	</resultMap>
+	
+	<select id="getOrderList" parameterType="map" resultMap="OrderSQL.getOrderList">
+		SELECT A.ORDER_SEQ 
+		     , DATE_FORMAT(A.INPUT_DATE , '%Y-%m-%d %T' ) AS ORDER_DATE
+		FROM TB_ORDER_MASTER A
+		WHERE A.MEMBER_SEQ = #{MEMBER_SEQ,jdbcType=VARCHAR}
+		  AND A.ORDER_STATUS != 'ORDA09'
+	</select>
+
+
+
+
 	<resultMap id="OrderSQL.round" type="map">
 		<result property="ORDER_ROUND"    column="ORDER_ROUND" javaType="string" jdbcType="VARCHAR"/>
 		<result property="ORDER_DATE"    column ="ORDER_DATE" javaType="string" jdbcType="VARCHAR"/>
