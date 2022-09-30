@@ -8,7 +8,7 @@ public interface OrderService {
 
 
     
-    public List<HashMap<String,Object>> getPrdList(HashMap<String,Object> paramMap);
+    public List<HashMap<String,Object>> getOrderList(HashMap<String,Object> paramMap);
 	
     
     // 주문등록

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.springbook.biz.member.service.MemberService;
 import com.springbook.biz.order.service.OrderService;
 import com.springbook.view.common.StringUtil;
 
@@ -30,6 +30,8 @@ public class OrderController{
     private OrderService orderService;
     
     
+    @Autowired
+    private MemberService memberService;
     
 /*
 
@@ -107,5 +109,65 @@ public class OrderController{
     
 
 
+    // 상품리스트조회
+    @RequestMapping("/order/getOrderList.do")
+    public @ResponseBody HashMap<String, Object> getOrderList(@RequestBody String inputJSON, ModelAndView mav, HttpServletRequest request) throws Exception {
+    	HashMap<String, Object> resMap = new HashMap<String, Object>();
+    	HashMap<String, Object> memberMap = new HashMap<String, Object>();
+    	HashMap<String, Object> resHead = new HashMap<String, Object>();
+    	List<HashMap<String, Object>> ordList = new ArrayList<HashMap<String, Object>>();
+    	HashMap<String, Object> resBody = new HashMap<String, Object>();
+		// JSON을 HashMap으로 변환해준다.
+    	HashMap<String,Object> paramMap = (HashMap<String,Object>) new ObjectMapper().readValue(inputJSON, Map.class);
+    	HashMap<String, Object> reqMap = (HashMap<String, Object>) paramMap.get("REQ_BODY");
+		
+		String retnMent = null;
+		String retnCode = null;
+		try {
+			
+			if(StringUtil.getEmptyString(reqMap.get("MEMBER_SEQ")).equals("")) {
+				retnMent = "필수값 누락";
+				retnCode = "400";
+			}else {
+
+				
+				ordList = orderService.getOrderList(reqMap);
+				memberMap = memberService.getMemberDetail(reqMap);
+				
+				if(ordList.size() < 1 || ordList == null) {
+
+					resBody.put("MEMBER_SEQ", null);
+					resBody.put("ORDER_LIST", null);
+					retnMent = "주문리스트가 없습니다.";
+					retnCode = "200";
+				}else {
+					resBody.put("ORDER_LIST", ordList);
+					resBody.put("MEMBER_NICK", StringUtil.getEmptyString(memberMap.get("MEMBER_NICK")));
+					
+					retnMent = "성공";
+					retnCode = "200";
+					
+				}
+				
+			}
+
+
+		} catch (Exception e){
+			retnMent = "시스템 오류 입니다.";
+			retnCode = "999";
+			resBody = null;
+		} finally {
+			
+			resHead.put("RETN_CODE", retnCode);
+			resHead.put("RETN_MENT", retnMent);
+		}
+		
+		resMap.put("RES_BODY", resBody);
+		resMap.put("RES_HEAD", resHead);
+		
+        return resMap;  // View 이름 리턴
+    }
+    
+    
     
 }

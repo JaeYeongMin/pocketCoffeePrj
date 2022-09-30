@@ -18,8 +18,8 @@ public class OrderDAO{
 
 
     // 회원 상세 조회
-    public List<HashMap<String, Object>> getPrdList(HashMap<String, Object> paramMap) {
-        return  mybatis.selectList("OrderSQL.getPrdList",paramMap);
+    public List<HashMap<String, Object>> getOrderList(HashMap<String, Object> paramMap) {
+        return  mybatis.selectList("OrderSQL.getOrderList",paramMap);
     }
     
 

@@ -15,9 +15,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderDAO orderDAO;
 
-    // 회원 상세조회
-    public List<HashMap<String,Object>> getPrdList(HashMap<String,Object> paramMap) {
-        return orderDAO.getPrdList(paramMap);
+    // 주문조회
+    public List<HashMap<String,Object>> getOrderList(HashMap<String,Object> paramMap) {
+        return orderDAO.getOrderList(paramMap);
     }
     
 
