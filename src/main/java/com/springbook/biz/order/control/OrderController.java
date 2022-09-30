@@ -136,7 +136,7 @@ public class OrderController{
 				
 				if(ordList.size() < 1 || ordList == null) {
 
-					resBody.put("MEMBER_SEQ", null);
+					resBody.put("MEMBER_NICK", StringUtil.getEmptyString(memberMap.get("MEMBER_NICK")));
 					resBody.put("ORDER_LIST", null);
 					retnMent = "주문리스트가 없습니다.";
 					retnCode = "200";
