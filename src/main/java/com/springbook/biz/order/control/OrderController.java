@@ -77,12 +77,11 @@ public class OrderController{
 			ArrayList<HashMap<String,Object>> orderList = (ArrayList<HashMap<String, Object>>) reqMap.get("ORDER_LIST");
 			
 			
-			// 주문 리스트 가져오기
 			if(orderList.size() > 0) {
 
 				resBody = orderService.createOrder(reqMap);
-				resHead.put("RETN_CODE", "200");
-				resHead.put("RETN_MENT", "성공");
+				retnMent = "성공";
+				retnCode = "200";
 			}else {
 				retnMent = "주문메뉴가 없습니다.";
 				retnCode = "999";
