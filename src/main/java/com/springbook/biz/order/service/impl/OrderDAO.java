@@ -17,7 +17,7 @@ public class OrderDAO{
 	private SqlSessionTemplate mybatis;
 
 
-    // 회원 상세 조회
+    // 주문 리스트 조회
     public List<HashMap<String, Object>> getOrderList(HashMap<String, Object> paramMap) {
         return  mybatis.selectList("OrderSQL.getOrderList",paramMap);
     }
@@ -34,9 +34,6 @@ public class OrderDAO{
     	HashMap<String, Object> ordDtMap = new HashMap<String, Object>();
     	
     	try {
-    		
-    		
-    		
     		// 오늘의 날짜와 차수를 조회한다.
     		HashMap<String, Object> roundInfo = mybatis.selectOne("OrderSQL.getOrderRound",paramMap);
     		
@@ -49,8 +46,6 @@ public class OrderDAO{
         	orderSeq = paramMap.get("ORDER_SEQ").toString();
     		
         	ArrayList<HashMap<String, Object>> orderList = (ArrayList<HashMap<String, Object>>) paramMap.get("ORDER_LIST");
-        	
-        	
         	
         	// 주문한 수 만큼 등록을 한다.
         	for(int i=0; i<orderList.size(); i++) {
@@ -76,18 +71,15 @@ public class OrderDAO{
         	resultMap.put("ORDER_ROUND", orderMap.get("ORDER_ROUND"));
         	resultMap.put("ORDER_DATE", orderMap.get("ORDER_DATE"));
         	resultMap.put("MEMBER_NICK", orderMap.get("MEMBER_NICK"));
+        	resultMap.put("ORDER_BRANCH", orderMap.get("ORDER_BRANCH"));
         	resultMap.put("ORDER_LIST", detailList);
         	
-        	
-    		
     	}catch(Exception e) {
     		resultMap.put("RETN_MENT", "시스템오류");
     		resultMap.put("RETN_CODE", "999");
     		System.out.println(e.getMessage());
     		
     	}
-    	
-
 
         return resultMap;
     }
