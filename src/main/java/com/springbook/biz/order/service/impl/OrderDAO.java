@@ -72,6 +72,7 @@ public class OrderDAO{
         	resultMap.put("ORDER_DATE", orderMap.get("ORDER_DATE"));
         	resultMap.put("MEMBER_NICK", orderMap.get("MEMBER_NICK"));
         	resultMap.put("ORDER_BRANCH", orderMap.get("ORDER_BRANCH"));
+        	resultMap.put("ORDER_SECT", orderMap.get("ORDER_SECT"));
         	resultMap.put("ORDER_LIST", detailList);
         	
     	}catch(Exception e) {
