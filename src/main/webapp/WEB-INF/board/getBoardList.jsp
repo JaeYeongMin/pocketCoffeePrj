@@ -1,4 +1,4 @@
-<%@page import="java.util.List" %>
+<%-- <%@page import="java.util.List" %>
 <%@page import="com.springbook.biz.board.impl.BoardDAOMybatis" %>
 <%@page import="com.springbook.biz.board.BoardVO" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -66,4 +66,4 @@
 <a href="insertBoard.jsp">새글 등록</a>
 </center>
 </body>
-</html>
+</html> --%>
