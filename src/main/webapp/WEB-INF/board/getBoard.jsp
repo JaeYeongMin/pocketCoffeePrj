@@ -1,4 +1,4 @@
-<%@page import="com.springbook.biz.board.impl.BoardDAOMybatis" %>
+<%-- <%@page import="com.springbook.biz.board.impl.BoardDAOMybatis" %>
 <%@page import="com.springbook.biz.board.BoardVO" %>
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -63,4 +63,4 @@
 <a href="getBoardList.do">글목록</a>
 </center>
 </body>
-</html>
+</html> --%>

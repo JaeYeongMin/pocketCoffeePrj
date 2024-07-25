@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="UserSQL">
+
+	<update id="updateLoginYN" parameterType="map">
+	
+		UPDATE TB_ADMIN SET
+			LOGIN_YN ='Y'
+		WHERE 1=1
+	</update>
+
+
+
+
+
+	<resultMap id="UserSQL.selectUserInfoOne" type="map">
+		<result property="USER_ID"	column="USER_ID"	javaType="string"	jdbcType="VARCHAR"/>
+		<result property="USER_PW"	column="USER_PW"	javaType="string"	jdbcType="VARCHAR"/>
+		<result property="LOGIN_YN"	column="LOGIN_YN"	javaType="string"	jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<select id="selectUserInfoOne" parameterType="map" resultMap="UserSQL.selectUserInfoOne">
+		SELECT USER_ID
+			, USER_PW
+			, LOGIN_YN
+		FROM TB_ADMIN LIMIT 1
+	</select>
+
+
+
+
+	<update id="updateUserInfo" parameterType="map">
+		UPDATE TB_ADMIN SET
+			USER_ID = #{USER_ID}
+			, USER_PW = #{USER_PW}
+			, LOGIN_YN = #{LOGIN_YN}
+	</update>
+
+
+
+</mapper>
