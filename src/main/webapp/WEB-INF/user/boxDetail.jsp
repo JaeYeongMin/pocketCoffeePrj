@@ -32,6 +32,8 @@
 	<br>
 	<div id="onClickBtn" class="btn" >시작!</div>
 	
+	<div id="id_alertTxt"></div>
+	
 	
 </form>
 </body>
@@ -40,19 +42,29 @@
 <script>
 
 $(document).ready(function(){
-	
+	var index = 0;
+	var SCH_STATUS ="WAIT";
 	
 	// 클릭
 	$("#onClickBtn").click(function(){
+		
+		if(SCH_STATUS !="WAIT"){
+			alert('조회중입니다.');
+			return false;
+		}else{
+			SCH_STATUS = "START";
+		}
+		
+		
 		let loginYn = $("#LOGIN_YN").val();
 		
 		setInterval(function(){
 			loginYn = $("#LOGIN_YN").val();
+			index++;
 			
 			if(loginYn =="N"){
-				chkLoginYN();
+				chkLoginYN(index);
 			}
-			
 
 		}, 1000);
 
@@ -61,7 +73,11 @@ $(document).ready(function(){
 });
 
 
-function chkLoginYN(){
+function chkLoginYN(i){
+
+	$("#id_alertTxt").html("");
+	$("#id_alertTxt").html("시작되었습니다: " + i);
+	
 	$.ajax({
 	    url: "/user/chkUserInfo.do",
 	    type: "POST",
