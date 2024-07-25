@@ -1,31 +1,38 @@
-/*package com.springbook.biz.user.impl;
+package com.springbook.biz.user.service.impl;
 
-import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.springbook.biz.user.UserService;
-import com.springbook.biz.user.UserVO;
+import com.springbook.biz.product.service.impl.ProductDAO;
+import com.springbook.biz.user.service.UserService;
+
 
 
 @Component("userService")
 public class UserServiceImpl implements UserService {
-    
-    @Resource(name="userDAO")
+    @Autowired
     private UserDAO userDAO;
 
 
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    // 로그인 yn 업데이트
+    public HashMap<String, Object> updateLoginYN(HashMap<String, Object> paramMap) {
+    	return userDAO.updateLoginYN(paramMap);
     }
     
     
-    public UserVO getUser(UserVO vo) {
-        return userDAO.getUser(vo);
+    // 계정정보
+    public HashMap<String, Object> selectUserInfoOne(HashMap<String, Object> paramMap) {
+    	return userDAO.selectUserInfoOne(paramMap);
     }
-
     
+    // 계정수정
+    public HashMap<String, Object> updateUserInfo(HashMap<String, Object> paramMap) {
+    	return userDAO.updateUserInfo(paramMap);
+    }
     
 
 }
-*/

@@ -1,53 +1,81 @@
-/*package com.springbook.view.user;
+package com.springbook.biz.user.control;
 
-import javax.servlet.http.HttpSession;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.springbook.biz.user.UserVO;
-import com.springbook.biz.user.impl.UserDAO;
+import com.springbook.biz.user.service.UserService;
+
 
 
 @Controller
-public class LoginController {
+@SessionAttributes("member")  // 모델 속성을 세션에도 저장
+public class LoginController{
+    
+    @Autowired
+    private UserService userService;
+    
+    
+    
+    @ModelAttribute("conditionMap")
+    public Map<String,String> serchConditionMap(){
+        Map<String,String> conditionMap = new HashMap<String,String>();
+        conditionMap.put("제목", "TITLE");
+        conditionMap.put("내용", "CONTENT");
+      
+        return conditionMap;
+    }
+    
 
-    @RequestMapping(value = "/login.do" , method=RequestMethod.GET)
-    public String loginView(UserVO vo) {
-        System.out.println("");
-        System.out.println("[LoginCtr]:: loginView() 로그인 화면으로 이동 ");
-        
-        vo.setId("test");
-        vo.setPassword("test123");
-        
-        return "login.jsp";
 
+    
+    
+
+    // 로그인
+    @RequestMapping("/user/login.do")
+    public void login(ModelAndView mav, HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
+    	HashMap<String, Object> resultMap = userService.updateLoginYN(paramMap);
     }
     
     
-    @RequestMapping(value = "/login.do" , method=RequestMethod.POST)
-    public String login(UserVO vo, UserDAO userDAO, HttpSession session) {
-        
-        if(vo.getId()== null || vo.getId().equals("")) {
-            throw new IllegalArgumentException("아이디는 반드시 입력해야 합니다.");
-        }
-        
-        UserVO user = userDAO.getUser(vo);
-        
-        
-        System.out.println(user.getName());
-        if(userDAO.getUser(vo) != null){
-            // 3. 화면 네비게이션
-            session.setAttribute("userName" , user.getName());
-            return "getBoardList.do";
-        }else{
-            return "login.jsp";
-        }
 
+    // 계정상세
+    @RequestMapping("/user/userDetail.do")
+    public ModelAndView userDetail(ModelAndView mav, HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
+    	HashMap<String, Object> resultMap = userService.selectUserInfoOne(paramMap);
+    	mav.addObject("detail", resultMap);
+    	return mav;
+    	
     }
-
+    
+    
+    // 계정수정
+    @RequestMapping("/user/updateUserInfo.do")
+    public @ResponseBody HashMap<String, Object> updateUserInfo(HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
+    	userService.updateUserInfo(paramMap);
+    	HashMap<String, Object> resultMap = userService.selectUserInfoOne(paramMap);
+    	return resultMap;
+    	
+    }
+    
+    // 계정체크
+    @RequestMapping("/user/chkUserInfo.do")
+    public @ResponseBody HashMap<String, Object> chkUserInfo(HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
+    	HashMap<String, Object> resultMap = userService.selectUserInfoOne(paramMap);
+    	return resultMap;
+    	
+    }
     
 
 }
-*/

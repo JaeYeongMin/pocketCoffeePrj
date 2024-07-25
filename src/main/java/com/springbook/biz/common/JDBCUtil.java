@@ -12,7 +12,7 @@ public class JDBCUtil {
             // Class.forName("com.mysql.cj.jdbc.Driver");
             // return DriverManager.getConnection("jdbc:mysql://localhost:3306/mjydbzz?serverTimezone=UTC","mjydbzz","tkadms4379!");
         	Class.forName("org.mariadb.jdbc.Driver");
-        	return DriverManager.getConnection("jdbc:mariadb://mjydbgg.cafe24.com:3306/mjydbgg","mjydbgg","tkadms4379!");
+        	return DriverManager.getConnection("jdbc:mariadb://sameun12.cafe12.com:3306/sameun12","sameun12","Tkadms4379@");
         } catch (Exception e) {
             e.printStackTrace();
         }

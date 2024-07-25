@@ -46,17 +46,14 @@
 		<result property="ORDER_ROUND"    column="ORDER_ROUND" javaType="string" jdbcType="VARCHAR"/>
 		<result property="ORDER_DATE"    column ="ORDER_DATE" javaType="string" jdbcType="VARCHAR"/>
 		<result property="MEMBER_NICK"    column ="MEMBER_NICK" javaType="string" jdbcType="VARCHAR"/>
-		<result property="ORDER_BRANCH"    column ="ORDER_BRANCH" javaType="string" jdbcType="VARCHAR"/>
-		<result property="ORDER_SECT"    column ="ORDER_SECT" javaType="string" jdbcType="VARCHAR"/>
+		
 	</resultMap>
 	
 	<select id="getOrderMasterList" parameterType="map" resultMap="OrderSQL.getOrderMasterList">
 		SELECT (SELECT MEMBER_NICK FROM TB_MEMBER WHERE DB_STATUS ='A' AND MEMBER_SEQ = #{MEMBER_SEQ,jdbcType=VARCHAR}) AS MEMBER_NICK
 		    , A.ORDER_DATE
 		    , A.ORDER_SEQ
-		    , A.ORDER_BRANCH
 		    , A.ORDER_ROUND
-		    , (CASE WHEN A.ORDER_SECT = 'IN' THEN '매장식사' ELSE '테이크아웃' END ) AS ORDER_SECT
 		FROM TB_ORDER_MASTER A
 		WHERE ORDER_SEQ = #{ORDER_SEQ,jdbcType=VARCHAR}
 		  AND ORDER_STATUS ='ORDA01'
@@ -104,15 +101,13 @@
 		INSERT INTO TB_ORDER_MASTER(
 	          MEMBER_SEQ
 	        , ORDER_SECT
-	        , ORDER_BRANCH
 			, ORDER_DATE
 			, ORDER_ROUND
 			, INPUT_DATE
 			, INPUT_ID
 		) VALUES(
 		      #{MEMBER_SEQ,jdbcType=VARCHAR}
-		    , #{ORDER_SECT,jdbcType=VARCHAR}
-		    , #{ORDER_BRANCH,jdbcType=VARCHAR} 
+		    , #{ORDER_SECT,jdbcType=VARCHAR} 
 			, #{ORDER_DATE,jdbcType=VARCHAR}
 			, #{ORDER_ROUND,jdbcType=VARCHAR}
 			, SYSDATE()

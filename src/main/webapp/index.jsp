@@ -1,16 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC = "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.rog/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE">
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Main Page</title>
 </head>
 <body>
-  <h1>게시판 프로그램 수정입니다.</h1>
+  <h1>로그인 프로그램</h1>
   <hr>
-    <a href="login.do">로그인</a> <br><br><br>
-    <a href="getBoardList.do">글 목록 바로가기 </a>
+    <a href="user/login.do">로그인 화면</a> <br><br><br>
+    <a href="user/userDetail.do">계정 설정</a> 
   <hr>
 </body>
 </html>
