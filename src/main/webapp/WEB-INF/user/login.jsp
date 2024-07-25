@@ -328,7 +328,7 @@ function onClickLogin() {
 	  	  	if(loginID == data.USER_ID && loginPW == data.USER_PW){
 	  		  alert('로그인 성공!');
 	  		  
-	  		  $("#frmsc").attr("target", "_self").attr("action", "/user/login.do").submit();
+	  		  $("#frmsc").attr("target", "_self").attr("action", "/user/Dologin.do").submit();
 	  		  
 	  		  
 	  		} else{

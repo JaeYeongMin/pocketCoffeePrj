@@ -26,27 +26,20 @@ public class LoginController{
     @Autowired
     private UserService userService;
     
-    
-    
-    @ModelAttribute("conditionMap")
-    public Map<String,String> serchConditionMap(){
-        Map<String,String> conditionMap = new HashMap<String,String>();
-        conditionMap.put("제목", "TITLE");
-        conditionMap.put("내용", "CONTENT");
-      
-        return conditionMap;
-    }
-    
-
-
-    
-    
-
     // 로그인
     @RequestMapping("/user/login.do")
     public void login(ModelAndView mav, HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
-    	HashMap<String, Object> resultMap = userService.updateLoginYN(paramMap);
+
     }
+    
+    
+    // 로그인 시도
+    @RequestMapping("/user/Dologin.do")
+    public ModelAndView Dologin(ModelAndView mav, HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
+    	HashMap<String, Object> resultMap = userService.updateLoginYN(paramMap);
+    	mav.setViewName("/user/login");
+    	return mav;
+    }    
     
     
 
@@ -69,11 +62,22 @@ public class LoginController{
     	
     }
     
+    
+    
     // 계정체크
     @RequestMapping("/user/chkUserInfo.do")
     public @ResponseBody HashMap<String, Object> chkUserInfo(HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
     	HashMap<String, Object> resultMap = userService.selectUserInfoOne(paramMap);
     	return resultMap;
+    }
+    
+    
+    // 결과화면
+    @RequestMapping("/user/boxDetail.do")
+    public ModelAndView boxDetail(ModelAndView mav, HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
+    	HashMap<String, Object> resultMap = userService.selectUserInfoOne(paramMap);
+    	mav.addObject("detail", resultMap);
+    	return mav;
     	
     }
     
