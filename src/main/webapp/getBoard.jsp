@@ -45,7 +45,7 @@
 		
 		<tr>
 			<td bgcolor="orange">조회수</td>
-			<td align="left">board.cnt</td>
+			<td align="left">board.cnt</td>  
 		</tr>
 		
 		
