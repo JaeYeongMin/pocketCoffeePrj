@@ -87,11 +87,28 @@ function chkLoginYN(){
 }
 
 
-//동기 지연 함수
-function sleep(ms) {
-    var start = Date.now() + ms;
-    while (Date.now() < start) {}
-}
+// 아두이노 연동!
+/* function doArduino() {
+    let port;
+    let writer;
+    
+    // 사용자가 장치를 선택하도록 요청
+    // port = await navigator.serial.requestPort();
+    // 연결 설정
+    await port.open({ baudRate: 9600 });
+
+    const encoder = new TextEncoderStream();
+    writer = encoder.writable.getWriter();
+    encoder.readable.pipeTo(port.writable);
+
+    console.log('Connected to Arduino');
+    
+    if (writer) {
+        await writer.write(10 + '\n');
+        console.log('Speed set to', 10);
+    }
+
+} */
 
 
 </script>

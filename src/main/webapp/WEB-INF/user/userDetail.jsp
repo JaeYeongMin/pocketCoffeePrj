@@ -21,10 +21,13 @@
 </style>
 <body>
 <form id="frmsc" name="frmsc" method="post">
-  <h1><a href="/">로그인 프로그램</a>  </h1>
+  <h1><a href="/">하나님나라로 Login!</a></h1>
   <hr>
-    ID: <input type="text" id="USER_ID" name="USER_ID" value="${detail.USER_ID}"> <br><br><br>
-    PW: <input type="text" id="USER_PW" name="USER_PW" value="${detail.USER_PW}"> <br><br><br>
+    ID: <span id="span_id">${detail.USER_ID}</span> 
+    <br><input type="text" id="USER_ID" name="USER_ID" placeholder="ID" value="${detail.USER_ID}"> <br><br><br>
+    
+    PW: <span id="span_pw">${detail.USER_PW}</span>
+    <br><input type="text" id="USER_PW" name="USER_PW" placeholder="PW" value="${detail.USER_PW}"> <br><br><br>
 	
 	성공여부:
 	<select id="LOGIN_YN" name="LOGIN_YN">
@@ -50,8 +53,18 @@ $(document).ready(function(){
 
 function updateUserInfo(){
 
+	var userId= $("#USER_ID").val();
+	var userPw= $("#USER_PW").val();
 	
-    //$("#frmsc").attr("target", "_self").attr("action", "/user/updateUserInfo.do").submit();
+    if(userId == "" || userId == null || userId == typeof "undefinded"){
+    	alert('아이디를 입력해주세요.');
+    	return;
+    }
+    
+    if(userPw == "" || userPw == null || userPw == typeof "undefinded"){
+    	alert('비밀번호를 입력해주세요.');
+    	return;
+    }
 	
 	$.ajax({
 	    url: "/user/updateUserInfo.do",
@@ -61,8 +74,7 @@ function updateUserInfo(){
 	    data: $("#frmsc").serialize() , 
 	    success: function(data) {
 	    	alert("수정되었습니다.");
-	    	$("#USER_ID").val(data.USER_ID);
-	    	$("#USER_PW").val(data.USER_PW);
+	    	 location.reload();
 	    },beforeSend:function(){ 
   	    },
   	    complete:function(){ 
