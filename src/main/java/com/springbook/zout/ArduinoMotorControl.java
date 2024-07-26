@@ -14,7 +14,7 @@ public class ArduinoMotorControl {
     private static final int TIME_OUT = 2000;
     private static final int DATA_RATE = 9600;
 
-    private SerialPort serialPort;
+    public SerialPort serialPort;
     private OutputStream outputStream;
 
     
@@ -25,7 +25,7 @@ public class ArduinoMotorControl {
         
         // 모터를 전진(1)으로 동작시키기
         motorControl.sendCommand('1');
-        Thread.sleep(5000); // 5초간 모터 동작
+        Thread.sleep(3000); // 5초간 모터 동작
         // 모터를 정지(0)시키기
         motorControl.sendCommand('0');
         
@@ -36,18 +36,22 @@ public class ArduinoMotorControl {
         initialize();
     }
 
-    private void initialize() {
+    synchronized private void initialize() {
         try {
+        	System.out.println("");
+        	System.out.println("=========== 시리얼 통신 시작 ============");
             CommPortIdentifier portId = CommPortIdentifier.getPortIdentifier(PORT_NAME);
-            String className =this.getClass().getName();
-            System.out.println(portId.getName());
-            //className = "sketch_jul25b";
             
-            serialPort = (SerialPort) portId.open(className, TIME_OUT);
+            
+            
+            System.out.println("GET PORT NAME : " + portId.getName());
+            
+            serialPort = (SerialPort) portId.open(this.getClass().getName() , TIME_OUT);
             serialPort.setSerialPortParams(DATA_RATE, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             outputStream = serialPort.getOutputStream();
             
-            System.out.println("시리얼통신 성공!!!!!");
+            System.out.println("");
+            System.out.println("=========== 시리얼 통신 성공!!! ============");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,8 +64,9 @@ public class ArduinoMotorControl {
     
     public void sendCommand(char command) {
         try {
-        	System.out.println("===========전송============");
-        	System.out.println(command);
+        	System.out.println("");
+        	System.out.println("=========== 명령전송 ============");
+        	System.out.println("전송값: " + command);
         	
             outputStream.write(command);
         } catch (Exception e) {

@@ -2,13 +2,11 @@ package com.springbook.biz.user.control;
 
 
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.springbook.biz.user.service.UserService;
+import com.springbook.view.common.StringUtil;
+import com.springbook.zout.ArduinoMotorControl;
 
 
 
@@ -79,6 +79,35 @@ public class LoginController{
     	mav.addObject("detail", resultMap);
     	return mav;
     	
+    }
+    
+    
+    
+    
+    
+    // 아두이노 통신
+    @RequestMapping("/user/executeArduino.do")
+    public @ResponseBody HashMap<String, Object> executeArduino(HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
+    	HashMap<String, Object> resultMap = userService.selectUserInfoOne(paramMap);
+
+    	// 로그인이 되었다면 아두이노 시리얼통신 시작
+    	if(StringUtil.getEmptyString(resultMap.get("LOGIN_YN")).equals("Y")) {
+    		
+    		ArduinoMotorControl motorControl = new ArduinoMotorControl();
+            Thread.sleep(2100);
+            
+            // 모터를 전진(1)으로 동작시키기
+            motorControl.sendCommand('1');
+            Thread.sleep(3000); // 5초간 모터 동작
+            // 모터를 정지(0)시키기
+            motorControl.sendCommand('0');
+            
+            // 시리얼 포트 닫기
+            motorControl.serialPort.close();
+    		
+    	}
+    	
+    	return resultMap;
     }
     
 

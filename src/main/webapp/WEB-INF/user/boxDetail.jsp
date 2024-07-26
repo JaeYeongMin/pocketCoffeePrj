@@ -79,7 +79,7 @@ function chkLoginYN(i){
 	$("#id_alertTxt").html("시작되었습니다: " + i);
 	
 	$.ajax({
-	    url: "/user/chkUserInfo.do",
+		url: "/user/chkUserInfo.do",
 	    type: "POST",
 	    dataType:"json",
 	    data: $("#frmsc").serialize() , 
@@ -89,6 +89,7 @@ function chkLoginYN(i){
 	    	
 	    	if(data.LOGIN_YN == "Y"){
 	    		$("#id_result").html("로그인 완료!");
+	    		doArduino();
 	    	}
 	    	
 	    },beforeSend:function(){ 
@@ -104,27 +105,30 @@ function chkLoginYN(i){
 
 
 // 아두이노 연동!
-/* function doArduino() {
-    let port;
-    let writer;
-    
-    // 사용자가 장치를 선택하도록 요청
-    // port = await navigator.serial.requestPort();
-    // 연결 설정
-    await port.open({ baudRate: 9600 });
+function doArduino() {
+	
+	$.ajax({
+	    url: "/user/executeArduino.do",
+	    type: "POST",
+	    dataType:"json",
+	    data: $("#frmsc").serialize() , 
+	    success: function(data) {
+	    	
+	    	$("#id_alertTxt").html("");
+	    	$("#id_alertTxt").html("박스 OPEN!!");
+	    	
+	    },beforeSend:function(){ 
+	 	    },
+	 	    complete:function(){ 
+	 	    },
+	       error : function(xhRequest, ErrorText, thrownError) {
+	       	alert('데이터 수정중 오류가 발생했습니다.');
+	       }
+	});
 
-    const encoder = new TextEncoderStream();
-    writer = encoder.writable.getWriter();
-    encoder.readable.pipeTo(port.writable);
+}
 
-    console.log('Connected to Arduino');
-    
-    if (writer) {
-        await writer.write(10 + '\n');
-        console.log('Speed set to', 10);
-    }
 
-} */
 
 
 </script>
