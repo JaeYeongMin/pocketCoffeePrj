@@ -34,10 +34,10 @@ public class LoginController{
     
     
     // 로그인 시도
-    @RequestMapping("/user/Dologin.do")
+    @RequestMapping("/user/doLogin.do")
     public ModelAndView Dologin(ModelAndView mav, HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
     	HashMap<String, Object> resultMap = userService.updateLoginYN(paramMap);
-    	mav.setViewName("/user/login");
+    	mav.setViewName("/user/doLogin");
     	return mav;
     }    
     
@@ -98,7 +98,7 @@ public class LoginController{
             
             // 모터를 전진(1)으로 동작시키기
             motorControl.sendCommand('1');
-            Thread.sleep(3000); // 5초간 모터 동작
+            Thread.sleep(2000); // 5초간 모터 동작
             // 모터를 정지(0)시키기
             motorControl.sendCommand('0');
             

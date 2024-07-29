@@ -224,11 +224,11 @@ img {
           <h1 class="login__title">Sign In</h1>
           <div class="login__box">
             <i class='bx bx-user login__icon'></i>
-            <input type="text" placeholder="Username" class="login__input" id ="id_loginID" name="USER_ID">
+            <input type="text" placeholder="Username" class="login__input" id ="id_loginID" name="USER_ID" autocomplete="off">
           </div>
           <div class="login__box">
             <i class='bx bx-lock login__icon'></i>
-            <input type="text" placeholder="Password" class="login__input" id ="id_loginPW" name ="USER_PW">
+            <input type="text" placeholder="Password" class="login__input" id ="id_loginPW" name ="USER_PW" autocomplete="off">
           </div>
 
 
@@ -328,7 +328,7 @@ function onClickLogin() {
 	  	  	if(loginID == data.USER_ID && loginPW == data.USER_PW){
 	  		  alert('로그인 성공!');
 	  		  
-	  		  $("#frmsc").attr("target", "_self").attr("action", "/user/Dologin.do").submit();
+	  		  $("#frmsc").attr("target", "_self").attr("action", "/user/doLogin.do").submit();
 	  		  
 	  		  
 	  		} else{

@@ -6,7 +6,6 @@
 <mapper namespace="UserSQL">
 
 	<update id="updateLoginYN" parameterType="map">
-	
 		UPDATE TB_ADMIN SET
 			LOGIN_YN ='Y'
 		WHERE 1=1

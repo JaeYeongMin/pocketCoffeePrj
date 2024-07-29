@@ -12,29 +12,50 @@
 </head>
 
 <style>
+	html { 
+	  background: url(../../resource/images/box/login_do.png) no-repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+	}
+
 	.btn{
 		border: 1px solid black;
 		display:inline-block;
-		padding: 3px; cursor: pointer; 
+		padding: 3px; cursor: pointer;
+		width: 50px;
+		height: 50px;
+	}
+	
+	.bgimg {
+	    border: 0;
+	    padding: 0; 
+	    background-image: url('image.jpg');
+	    min-height: 100%;
+	    background-position: center;
+	    background-size: cover;
 	}
 
 </style>
 <body>
 <form id="frmsc" name="frmsc" method="post">
+<input type="hidden" name="LOGIN_YN" id="LOGIN_YN" value="${detail.LOGIN_YN}">
+<!-- 
+
+
 	<h1><a href="/">하나님나라로 Login!</a></h1>
 	<hr>
 		
-		<div id="id_result">???????????????</div>
-		
-		<input type="text" name="LOGIN_YN" id="LOGIN_YN" value="${detail.LOGIN_YN}">
-			
+		<img alt="" src="../../resource/images/box/resultIMG.jpg">
 	<hr>
 	<br>
-	<div id="onClickBtn" class="btn" >시작!</div>
-	
 	<div id="id_alertTxt"></div>
-	
-	
+-->
+
+<div id="onClickBtn" class="btn" style="color: white;"></div>
+<div id="id_alertTxt" style="color: white;"></div>
+
 </form>
 </body>
 </html>
@@ -75,8 +96,10 @@ $(document).ready(function(){
 
 function chkLoginYN(i){
 
-	$("#id_alertTxt").html("");
-	$("#id_alertTxt").html("시작되었습니다: " + i);
+	//$("#id_alertTxt").html("");
+	// $("#id_alertTxt").html("시작되었습니다: " + i);
+	
+	console.log("시작되었습니다: " + i);
 	
 	$.ajax({
 		url: "/user/chkUserInfo.do",
@@ -88,7 +111,18 @@ function chkLoginYN(i){
 	    	
 	    	
 	    	if(data.LOGIN_YN == "Y"){
-	    		$("#id_result").html("로그인 완료!");
+	    		// $("#id_result").html("로그인 완료!");
+	    		
+				$("html").css({
+				    "background":"url(../../resource/images/box/result_img.jpg) no-repeat center center fixed", 
+				    /* "background-repeat" : "no-repeat", */ 
+				    /* "background-position":"center center", */
+				  	"-webkit-background-size": "cover",
+				    "-moz-background-size": "cover",
+				    "-o-background-size" : "cover",
+				    "background-size": "cover"
+				});
+	    		
 	    		doArduino();
 	    	}
 	    	
@@ -114,15 +148,15 @@ function doArduino() {
 	    data: $("#frmsc").serialize() , 
 	    success: function(data) {
 	    	
-	    	$("#id_alertTxt").html("");
-	    	$("#id_alertTxt").html("박스 OPEN!!");
+	    	// $("#id_alertTxt").html("");
+	    	// $("#id_alertTxt").html("박스 OPEN!!");
 	    	
 	    },beforeSend:function(){ 
 	 	    },
 	 	    complete:function(){ 
 	 	    },
 	       error : function(xhRequest, ErrorText, thrownError) {
-	       	alert('데이터 수정중 오류가 발생했습니다.');
+	       	alert('연결에 실패했습니다');
 	       }
 	});
 

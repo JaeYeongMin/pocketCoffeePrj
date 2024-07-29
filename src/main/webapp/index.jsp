@@ -7,18 +7,6 @@
 <meta charset="UTF-8">
 <title>Main Page</title>
 </head>
-<style type="text/css">
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
-*, ::before, ::after {
-  box-sizing: border-box;
-}
-@media screen and (min-width: 576px) {
-  .login__forms {
-    width: 348px;
-    justify-self: center;
-  }
-}
-</style>
 
 <body>
   <h1>하나님나라로 Login!</h1>
