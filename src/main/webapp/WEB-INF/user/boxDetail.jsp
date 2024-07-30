@@ -99,6 +99,11 @@ function chkLoginYN(i){
 	//$("#id_alertTxt").html("");
 	// $("#id_alertTxt").html("시작되었습니다: " + i);
 	
+	$("#onClickBtn").css({
+		"border" : "none"
+		
+	})
+	
 	console.log("시작되었습니다: " + i);
 	
 	$.ajax({
