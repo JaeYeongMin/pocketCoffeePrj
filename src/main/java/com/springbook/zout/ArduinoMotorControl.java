@@ -11,7 +11,7 @@ public class ArduinoMotorControl {
 
 	// private static final String PORT_NAME = "USB-SERIAL CH340(COM5)"; // 포트 이름은 각자의 환경에 맞게 변경
 	private static final String PORT_NAME = "COM5"; // 포트 이름은 각자의 환경에 맞게 변경
-    private static final int TIME_OUT = 2000;
+    private static final int TIME_OUT = 5000;
     private static final int DATA_RATE = 9600;
 
     public SerialPort serialPort;
@@ -21,7 +21,7 @@ public class ArduinoMotorControl {
     public static void main(String[] args) throws InterruptedException {
         ArduinoMotorControl motorControl = new ArduinoMotorControl();
         
-        Thread.sleep(2100);
+        Thread.sleep(1900);
         
         // 모터를 전진(1)으로 동작시키기
         motorControl.sendCommand('1');

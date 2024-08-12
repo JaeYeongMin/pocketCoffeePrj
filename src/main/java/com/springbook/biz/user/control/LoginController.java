@@ -91,21 +91,19 @@ public class LoginController{
     	HashMap<String, Object> resultMap = userService.selectUserInfoOne(paramMap);
 
     	// 로그인이 되었다면 아두이노 시리얼통신 시작
-    	if(StringUtil.getEmptyString(resultMap.get("LOGIN_YN")).equals("Y")) {
     		
     		ArduinoMotorControl motorControl = new ArduinoMotorControl();
-            Thread.sleep(2100);
+            Thread.sleep(1800);
             
             // 모터를 전진(1)으로 동작시키기
             motorControl.sendCommand('1');
-            Thread.sleep(2000); // 5초간 모터 동작
+            Thread.sleep(1500); // 1.5초간 모터 동작
             // 모터를 정지(0)시키기
             motorControl.sendCommand('0');
             
             // 시리얼 포트 닫기
             motorControl.serialPort.close();
     		
-    	}
     	
     	return resultMap;
     }
