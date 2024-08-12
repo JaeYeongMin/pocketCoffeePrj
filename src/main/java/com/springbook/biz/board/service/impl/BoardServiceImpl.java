@@ -1,6 +1,7 @@
 package com.springbook.biz.board.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,12 @@ public class BoardServiceImpl implements BoardService {
     @Autowired
     private BoardDAO boardDAO;
 
+    // 로그인 yn 업데이트
+    public List<HashMap<String, Object>> getBoardList(HashMap<String, Object> paramMap) {
+    	return boardDAO.getBoardList(paramMap);
+    }
+    
+    
 
     // 로그인 yn 업데이트
     public HashMap<String, Object> updateLoginYN(HashMap<String, Object> paramMap) {

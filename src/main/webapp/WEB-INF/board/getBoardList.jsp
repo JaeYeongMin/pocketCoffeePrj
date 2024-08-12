@@ -7,8 +7,12 @@
 <!DOCTYPE">
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Main Page</title>
+
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=0.45">
+
 </head>
 
 <style>
@@ -205,103 +209,55 @@ body {
     border-radius: 500px 0 0 500px;
   }
 }
-
-
 </style>
 <body>
 <div class="timeline">
 
 
-  <div class="container left">
-    <div class="date">양다희</div>
-    <i class="icon fa fa-home"></i>
-    <div class="content">
-      <h2></h2>
-      <p>
-        
-      </p>
-    </div>
-  </div>
-  <div class="container right">
-    <div class="date">김예지</div>
-    <i class="icon fa fa-gift"></i>
-    <div class="content">
-      <h2>Lorem ipsum dolor sit amet</h2>
-      <p>
-        Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.
-      </p>
-    </div>
-  </div>
-  <div class="container left">
-    <div class="date">박튼튼</div>
-    <i class="icon fa fa-user"></i>
-    <div class="content">
-      <h2>Lorem ipsum dolor sit amet</h2>
-      <p>
-        Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.
-      </p>
-    </div>
-  </div>
-  
-  <div class="container right">
-    <div class="date">안예환</div>
-    <i class="icon fa fa-running"></i>
-    <div class="content">
-      <h2>Lorem ipsum dolor sit amet</h2>
-      <p>
-        Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.
-      </p>
-    </div>
-  </div>
-  
+
+<c:forEach items="${boardList}" var="list" varStatus="stat">
+			
+	<c:choose>
+		<c:when test="${(stat.index+1) mod 2 != 0}">
+			<div class="container left">
+			  <div class="date">${list.USER_ID}</div>
+			  <i class="icon fa fa-home"></i>
+			  <div class="content">
+			    <h2>${list.CONT_TITLE}</h2>
+			    <p>${list.CONT_TEXT}</p>
+			  </div>
+			</div>
+		</c:when>
+		
+		<c:otherwise>
+			<div class="container right">
+			  <div class="date">${list.USER_ID}</div>
+			  <i class="icon fa fa-gift"></i>
+			  <div class="content">
+			    <h2>${list.CONT_TITLE}</h2>
+			    <p>${list.CONT_TEXT}</p>
+			  </div>
+			</div>	
+		</c:otherwise>
+	
+	</c:choose>
+
+
+
+	
+	
+	
+	
+</c:forEach>
 
 
 
 
 
 
-  <div class="container left">
-    <div class="date">민재영</div>
-    <i class="icon fa fa-home"></i>
-    <div class="content">
-      <h2>Lorem ipsum dolor sit amet</h2>
-      <p>
-        Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.
-      </p>
-    </div>
-  </div>
-  <div class="container right">
-    <div class="date">도유정</div>
-    <i class="icon fa fa-gift"></i>
-    <div class="content">
-      <h2></h2>
-      <p>
-        
-      </p>
-    </div>
-  </div>
-  <div class="container left">
-    <div class="date">도현정</div>
-    <i class="icon fa fa-user"></i>
-    <div class="content">
-      <h2>Lorem ipsum dolor sit amet</h2>
-      <p>
-        Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.
-      </p>
-    </div>
-  </div>
-  
-  <div class="container right">
-    <div class="date">김예은</div>
-    <i class="icon fa fa-running"></i>
-    <div class="content">
-      <h2>Lorem ipsum dolor sit amet</h2>
-      <p>
-        Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.
-      </p>
-    </div>
-  </div>
-  
+
+
+
 
 
 </div>
@@ -309,5 +265,25 @@ body {
 </html>
 
 <script>
+
+
+//Jquery Start
+$(document).ready(function(){
+	
+	$("#container").click(function(){
+		onClikcPop();
+	});
+
+
+});// Jquery END
+
+
+
+function onClikcPop(){
+	
+	alert('test');
+	
+}
+
 
 </script>

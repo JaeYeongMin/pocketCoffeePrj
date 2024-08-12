@@ -5,4 +5,28 @@
 
 <mapper namespace="BoardSQL">
 
+	<resultMap id="BoardSQL.getBoardList" type="map">
+		<result property="USER_SEQ"		column="ORDER_SEQ"  	javaType="string" 	jdbcType="VARCHAR"/>
+		<result property="USER_ID"		column="USER_ID" 		javaType="string" 	jdbcType="VARCHAR"/>
+		<result property="USER_PW"		column="USER_PW" 		javaType="string" 	jdbcType="VARCHAR"/>
+		<result property="CONT_TEXT"	column="CONT_TEXT"		javaType="string" 	jdbcType="VARCHAR"/>
+		<result property="CONT_TITLE"	column="CONT_TITLE"		javaType="string" 	jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	
+	
+	
+	<select id="getBoardList" parameterType="map" resultMap="BoardSQL.getBoardList">
+		SELECT A.USER_SEQ
+				, A.USER_ID
+				, A.USER_PW
+				, A.CONT_TEXT
+				, A.CONT_TITLE
+		FROM TB_USER A
+		WHERE 1=1
+		ORDER BY USER_ID
+	</select>
+
+
+
 </mapper>

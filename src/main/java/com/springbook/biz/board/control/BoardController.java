@@ -27,8 +27,9 @@ public class BoardController{
     
     // 게시판 리스트
     @RequestMapping("/board/getBoardList.do")
-    public void getBoardList(ModelAndView mav, HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
-
+    public ModelAndView getBoardList(ModelAndView mav, HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
+    	mav.addObject("boardList" , boardService.getBoardList(paramMap));
+    	return mav;
     }
     
     
