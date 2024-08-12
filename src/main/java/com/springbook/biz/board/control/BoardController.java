@@ -32,5 +32,13 @@ public class BoardController{
     	return mav;
     }
     
+
+    
+    // 계정수정
+    @RequestMapping("/board/updateBoard.do")
+    public @ResponseBody HashMap<String, Object> updateBoard(HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
+    	HashMap<String, Object> resultMap = boardService.updateBoard(paramMap);
+    	return resultMap;
+    }
     
 }

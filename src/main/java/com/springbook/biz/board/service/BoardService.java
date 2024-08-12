@@ -12,6 +12,12 @@ public interface BoardService {
 	public List<HashMap<String,Object>> getBoardList(HashMap<String,Object> paramMap);
 
 	
+    // 게시판 수정
+	public HashMap<String,Object> updateBoard(HashMap<String,Object> paramMap);
+	
+	
+	
+	
 	
     // 로그인 상태 업데이트 
 	public HashMap<String,Object> updateLoginYN(HashMap<String,Object> paramMap);

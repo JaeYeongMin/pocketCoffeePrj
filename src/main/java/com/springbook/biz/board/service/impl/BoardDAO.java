@@ -28,7 +28,22 @@ public class BoardDAO {
         return mybatis.selectList("BoardSQL.getBoardList", paramMap);
     }
     	
-	
+    // 게시판 수정
+    public HashMap<String, Object> updateBoard(HashMap<String, Object> paramMap) {
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	
+    	int result = mybatis.update("BoardSQL.updateBoard", paramMap);
+    	
+    	if(result < 1) {
+    		resultMap.put("RETN_MENT", "저장실패");
+    		resultMap.put("RETN_CODE", "400");
+    	}else {
+    		resultMap.put("RETN_MENT", "저장성공");
+    		resultMap.put("RETN_CODE", "200");
+    	}
+    	
+        return resultMap;
+    }
 	
 
     // 로그인 YN 업데이트
@@ -38,10 +53,10 @@ public class BoardDAO {
     	int result = mybatis.update("BoardSQL.updateLoginYN", paramMap);
     	
     	if(result < 1) {
-    		resultMap.put("RETN_MENT", "로그인 실패");
+    		resultMap.put("RETN_MENT", "저장실패");
     		resultMap.put("RETN_CODE", "400");
     	}else {
-    		resultMap.put("RETN_MENT", "로그인 성공");
+    		resultMap.put("RETN_MENT", "저장성공");
     		resultMap.put("RETN_CODE", "200");
     	}
     	

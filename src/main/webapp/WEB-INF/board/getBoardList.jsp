@@ -3,19 +3,19 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-
 <!DOCTYPE">
 <html>
 <head>
-
   <meta charset="UTF-8">
   <title></title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <meta name="viewport" content="width=device-width,initial-scale=0.45">
 
 </head>
 
 <style>
+input textarea{
+	font-size :50px;
+}
 *,
 *::before,
 *::after {
@@ -47,22 +47,22 @@ body {
   margin-left: -1px;
 }
 
-.container {
+.containerTime {
   padding: 15px 30px;
   position: relative;
   background: inherit;
   width: 50%;
 }
 
-.container.left {
+.containerTime.left {
   left: 0;
 }
 
-.container.right {
+.containerTime.right {
   left: 50%;
 }
 
-.container::after {
+.containerTime::after {
   content: "";
   position: absolute;
   width: 16px;
@@ -75,11 +75,11 @@ body {
   z-index: 1;
 }
 
-.container.right::after {
+.containerTime.right::after {
   left: -8px;
 }
 
-.container::before {
+.containerTime::before {
   content: "";
   position: absolute;
   width: 50px;
@@ -90,16 +90,16 @@ body {
   z-index: 1;
 }
 
-.container.right::before {
+.containerTime.right::before {
   left: 8px;
 }
 
-.container .date {
+.containerTime .date {
   position: absolute;
   display: inline-block;
-  top: calc(50% - 8px);
+  top: calc(50% - 25px);
   text-align: center;
-  font-size: 14px;
+  font-size: 30px;
   font-weight: bold;
   color: #006e51;
   text-transform: uppercase;
@@ -107,15 +107,15 @@ body {
   z-index: 1;
 }
 
-.container.left .date {
-  right: -75px;
+.containerTime.left .date {
+  right: -100px;
 }
 
-.container.right .date {
-  left: -75px;
+.containerTime.right .date {
+  left: -100px;
 }
 
-.container .icon {
+.containerTime .icon {
   position: absolute;
   display: inline-block;
   width: 40px;
@@ -131,37 +131,38 @@ body {
   z-index: 1;
 }
 
-.container.left .icon {
+.containerTime.left .icon {
   right: 56px;
 }
 
-.container.right .icon {
+.containerTime.right .icon {
   left: 56px;
 }
 
-.container .content {
+.containerTime .content {
   padding: 30px 90px 30px 30px;
   background: #f6d155;
   position: relative;
-  border-radius: 0 500px 500px 0;
+  border-radius: 0 100px 100px 0;
 }
 
-.container.right .content {
+.containerTime.right .content {
   padding: 30px 30px 30px 90px;
-  border-radius: 500px 0 0 500px;
+  border-radius: 100px 0 0 100px;
+  text-align: right;
 }
 
-.container .content h2 {
+.containerTime .content h2 {
   margin: 0 0 10px 0;
-  font-size: 18px;
+  font-size: 35px;
   font-weight: normal;
   color: #006e51;
 }
 
-.container .content p {
+.containerTime .content p {
   margin: 0;
-  font-size: 16px;
-  line-height: 22px;
+  font-size: 30px;
+  line-height: 50px;
   color: #000000;
 }
 
@@ -170,47 +171,154 @@ body {
     left: 90px;
   }
 
-  .container {
+  .containerTime {
     width: 100%;
     padding-left: 120px;
     padding-right: 30px;
   }
 
-  .container.right {
+  .containerTime.right {
     left: 0%;
   }
 
-  .container.left::after,
-  .container.right::after {
+  .containerTime.left::after,
+  .containerTime.right::after {
     left: 82px;
   }
 
-  .container.left::before,
-  .container.right::before {
+  .containerTime.left::before,
+  .containerTime.right::before {
     left: 100px;
     border-color: transparent #006e51 transparent transparent;
   }
 
-  .container.left .date,
-  .container.right .date {
+  .containerTime.left .date,
+  .containerTime.right .date {
     right: auto;
     left: 15px;
   }
 
-  .container.left .icon,
-  .container.right .icon {
+  .containerTime.left .icon,
+  .containerTime.right .icon {
     right: auto;
     left: 146px;
   }
 
-  .container.left .content,
-  .container.right .content {
+  .containerTime.left .content,
+  .containerTime.right .content {
     padding: 30px 30px 30px 90px;
-    border-radius: 500px 0 0 500px;
+    border-radius: 100px 0 0 100px;
   }
 }
+
+
 </style>
+
+
+
+
+
+
+
+
+
+<style>
+
+* {
+   box-sizing: border-box;
+   outline: none;
+   font-family: Arial;
+}
+.btn {
+   background-color: #ddd;
+   display: inline-block;
+   padding: 20px 30px;
+   color: #333;
+   font: bold 16px Arial;
+   text-decoration: none;
+}
+#modal-window {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   z-index: 9999;
+   background-color: rgba(0, 0, 0, 0.8); /* shaded background color */
+   visibility: hidden;
+   display: table;
+}
+#modal-window.active {
+   visibility: visible;
+}
+.modal-close {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   top: 0;
+   display: block;
+   font-size: 40px;
+   line-height: 30px;
+   color: rgba(255, 255, 255, 0.5);
+   text-align: right;
+   padding: 20px;
+   cursor: pointer;
+   transition: 0.2s;
+   -webkit-transition: 0.2s;
+   transition-delay: 0.2s;
+   -webkit-transition-delay: 0.2s;
+   transform: translateY(-20px);
+   -webkit-transform: translateY(-20px);
+}
+#modal-window.active .modal-close {
+   transform: translateY(0px);
+   -webkit-transform: translateY(0px);
+}
+.align-content {
+   display: table-cell;
+   vertical-align: middle;
+}
+#modal-window .content2 {
+   position: relative;
+   max-width: 720px; /*modal window max width */
+   background-color: #fff;
+   margin: 0 auto;
+   padding: 10px 30px;
+   height: 1000px;
+   /* visual effect */
+   opacity: 0;
+   transition: 0.2s;
+   -webkit-transition: 0.2s;
+   transform: translateY(20px);
+   -webkit-transform: translateY(20px);
+}
+#modal-window.active .content2 {
+   opacity: 1;
+   transform: translateY(0px);
+   -webkit-transform: translateY(0px);
+}
+
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <body>
+
 <div class="timeline">
 
 
@@ -219,7 +327,7 @@ body {
 			
 	<c:choose>
 		<c:when test="${(stat.index+1) mod 2 != 0}">
-			<div class="container left">
+			<div class="containerTime left"  SEQ ="${list.USER_SEQ}" >
 			  <div class="date">${list.USER_ID}</div>
 			  <i class="icon fa fa-home"></i>
 			  <div class="content">
@@ -230,7 +338,7 @@ body {
 		</c:when>
 		
 		<c:otherwise>
-			<div class="container right">
+			<div class="containerTime right" SEQ ="${list.USER_SEQ}">
 			  <div class="date">${list.USER_ID}</div>
 			  <i class="icon fa fa-gift"></i>
 			  <div class="content">
@@ -261,8 +369,50 @@ body {
 
 
 </div>
+
+<!-- ========== MODALS ========== -->
+<div id="modal-window">
+	<!-- <span class="modal-close">&#10006;</span> -->
+	<div class="align-content">
+		<div class="content2" style="font-size: 50px;">
+			<form id="hForm" name="hForm">
+			<input type="hidden" name="USER_SEQ" id="USER_SEQ" value="">
+		
+			<div class="mb-3">
+				<label for="exampleFormControlInput1" class="form-label">제목</label>
+				<input class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" style="font-size: 50px;" name="CONT_TITLE">
+			</div>
+			<div class="mb-3">
+			  <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+			  <textarea class="form-control" id="exampleFormControlTextarea1" rows="7" style="font-size: 50px;" name="CONT_TEXT"></textarea>
+			</div>
+
+			</form>
+			<div style=" text-align: center;">
+			
+			<a class="btn btn-primary" href="#" role="button" style="font-size: 30px;" id="btnSend">저장하기</a>
+			<a class="btn btn-danger" href="#" role="button" style="font-size: 30px;" id="modal-close">닫기</a>
+			
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- ========== END MODALS ========== -->
+
+
+
+
+
+
 </body>
+
+
 </html>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 <script>
 
@@ -270,20 +420,59 @@ body {
 //Jquery Start
 $(document).ready(function(){
 	
-	$("#container").click(function(){
-		onClikcPop();
+	$(".containerTime").click(function(){
+		onClikcPop($(this).attr("SEQ"));
+	});
+	
+	$('#modal-close').click(function() {
+		$(this).parent().parent().parent().parent().removeClass('active');
 	});
 
-
+	
+    $('#btnSend').click(function(){
+		
+    	if(!confirm('저장하시겠습니까?')) return false;
+    	
+      	$.ajax({
+      	    url: "/board/updateBoard.do",
+      	    type: "POST",
+      	    dataType:"json",
+      	    
+      	    data: $("#hForm").serialize() , 
+      	    success: function(data) {
+      	    	
+    	  	  	if(data.RETN_CODE =="200"){
+    	  		  
+    	  	  	 	location.reload();
+    	  		  
+    	  		} 
+      	    },beforeSend:function(){ 
+        	    },
+        	    complete:function(){ 
+        	    },
+              error : function(xhRequest, ErrorText, thrownError) {
+              	alert('데이터 수정중 오류가 발생했습니다.');
+              }
+      	});
+		
+    });
 });// Jquery END
 
 
 
-function onClikcPop(){
+function onClikcPop(seq){
+	var loginYN = false;
 	
-	alert('test');
+	var inputString = prompt('비밀번호를 입력하세요');
+	loginYN = true;
+	
+	if(loginYN){
+		$("#USER_SEQ").val(seq);
+		$('#modal-window').addClass('active');
+	}
 	
 }
 
 
 </script>
+

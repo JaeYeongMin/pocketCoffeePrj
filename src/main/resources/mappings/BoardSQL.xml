@@ -29,4 +29,16 @@
 
 
 
+
+
+	<update id="updateBoard" parameterType="map">
+		UPDATE TB_USER SET
+			  CONT_TEXT = #{CONT_TEXT}
+			, CONT_TITLE = #{CONT_TITLE}
+		WHERE 1=1
+		  AND USER_SEQ = #{USER_SEQ} 
+	</update>
+
+
+
 </mapper>

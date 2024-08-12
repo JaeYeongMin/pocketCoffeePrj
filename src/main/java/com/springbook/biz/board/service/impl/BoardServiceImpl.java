@@ -15,10 +15,17 @@ public class BoardServiceImpl implements BoardService {
     @Autowired
     private BoardDAO boardDAO;
 
-    // 로그인 yn 업데이트
+    // 게시판 리스트 조회
     public List<HashMap<String, Object>> getBoardList(HashMap<String, Object> paramMap) {
     	return boardDAO.getBoardList(paramMap);
     }
+    
+    // 게시판 수정
+    public HashMap<String, Object> updateBoard(HashMap<String, Object> paramMap) {
+    	return boardDAO.updateBoard(paramMap);
+    }
+    
+    
     
     
 
