@@ -17,5 +17,11 @@
   		<li><h2><a href="user/boxDetail.do">결과 화면</a></h2></li>
   	</ul>
   <hr>
+  
+  <hr>
+  	<ul>
+  		<li><h2><a href="board/getBoardList.do">게시판</a></h2></li>
+  	</ul>
+  <hr>
 </body>
 </html>

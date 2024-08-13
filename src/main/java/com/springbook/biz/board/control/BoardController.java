@@ -37,6 +37,9 @@ public class BoardController{
     // 계정수정
     @RequestMapping("/board/updateBoard.do")
     public @ResponseBody HashMap<String, Object> updateBoard(HttpServletRequest request, @RequestParam HashMap<String, Object> paramMap) throws Exception {
+    	
+    	paramMap.put("CONT_TEXT" , paramMap.get("CONT_TEXT").toString().replaceAll("\r\n","<br>"));
+    	
     	HashMap<String, Object> resultMap = boardService.updateBoard(paramMap);
     	return resultMap;
     }
