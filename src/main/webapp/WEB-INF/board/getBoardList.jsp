@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+
+
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <!DOCTYPE">
 <html>
@@ -255,7 +257,7 @@ body {
    position: absolute;
    width: 100%;
    height: 100%;
-   top: 0;
+   /* top: 0; */
    display: block;
    font-size: 40px;
    line-height: 30px;
@@ -324,26 +326,30 @@ body {
 
 
 <c:forEach items="${boardList}" var="list" varStatus="stat">
+	<c:set var="str1" value="${list.CONT_TEXT}"/>
+	<c:set var="cont_text" value="${fn:replace(str1, '\\\n', '<br>')}" />
+
 			
 	<c:choose>
 		<c:when test="${(stat.index+1) mod 2 != 0}">
-			<div class="containerTime left"  SEQ ="${list.USER_SEQ}" >
+		
+			<div class="containerTime left" SEQ ="${list.USER_SEQ}"  TITLE ="${list.CONT_TITLE}"  TEXT ="${cont_text}">
 			  <div class="date">${list.USER_ID}</div>
 			  <i class="icon fa fa-home"></i>
 			  <div class="content">
 			    <h2>${list.CONT_TITLE}</h2>
-			    <p>${list.CONT_TEXT}</p>
+			    <p>${cont_text }</p>
 			  </div>
 			</div>
 		</c:when>
 		
 		<c:otherwise>
-			<div class="containerTime right" SEQ ="${list.USER_SEQ}">
+			<div class="containerTime right" SEQ ="${list.USER_SEQ}"  TITLE ="${list.CONT_TITLE}"  TEXT ="${cont_text}">
 			  <div class="date">${list.USER_ID}</div>
 			  <i class="icon fa fa-gift"></i>
 			  <div class="content">
 			    <h2>${list.CONT_TITLE}</h2>
-			    <p>${list.CONT_TEXT}</p>
+			    <p>${cont_text }</p>
 			  </div>
 			</div>	
 		</c:otherwise>
@@ -372,30 +378,46 @@ body {
 
 <!-- ========== MODALS ========== -->
 <div id="modal-window">
-	<!-- <span class="modal-close">&#10006;</span> -->
+	<span class="modal-close">&#10006;</span>
 	<div class="align-content">
-		<div class="content2" style="font-size: 50px;">
-			<form id="hForm" name="hForm">
-			<input type="hidden" name="USER_SEQ" id="USER_SEQ" value="">
+		<div class="content2">
 		
-			<div class="mb-3">
-				<label for="exampleFormControlInput1" class="form-label">제목</label>
-				<input class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" style="font-size: 50px;" name="CONT_TITLE">
-			</div>
-			<div class="mb-3">
-			  <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-			  <textarea class="form-control" id="exampleFormControlTextarea1" rows="7" style="font-size: 50px;" name="CONT_TEXT"></textarea>
-			</div>
-
-			</form>
-			<div style=" text-align: center;">
+			<div style="height: 900px;">
+				<form id="hForm" name="hForm">
+					<input type="hidden" name="USER_SEQ" id="USER_SEQ" value="">
+					<input type="hidden" name="TEMP_CONT_TITLE" id="TEMP_CONT_TITLE">
+					<input type="hidden" name="TEMP_CONT_TEXT" id="TEMP_CONT_TEXT">
 			
-			<a class="btn btn-primary" href="#" role="button" style="font-size: 30px;" id="btnSend">저장하기</a>
-			<a class="btn btn-danger" href="#" role="button" style="font-size: 30px;" id="modal-close">닫기</a>
+					
+					
+					<div class="mb-3">
+						<label for="CONT_TITLE" class="form-label" style="font-size: 50px;">제목</label>
+						<p id="view1" style="font-size: 30px;"></p>
+						<input class="form-control form-control-lg edit" type="hidden" style="font-size: 30px;" name="CONT_TITLE" id="CONT_TITLE">
+					</div>
+					</br>
+					
+					<div class="mb-3">
+						<label for="CONT_TEXT" class="form-label" style="font-size: 50px;">내용</label>
+						<p id="view2" style="font-size: 30px;"></p>
+						
+						<textarea class="form-control edit" rows="11" style="font-size: 30px; display: none" name="CONT_TEXT" id="CONT_TEXT"></textarea>
+					</div>
+	
+				</form>
+			
+			</div>
+			<div style=" text-align: center; position: relative; bottom: 10px; ">
+			
+				<a class="btn btn-primary" href="#" style="font-size: 30px;" id="btnEdit">편집하기</a>
+				<a class="btn btn-primary" href="#" style="font-size: 30px; display:none;" id="btnSend">저장하기</a>
+			<!-- <a class="btn btn-danger" href="#" role="button" style="font-size: 30px;" id="modal-close">닫기</a> -->
 			
 			</div>
 
 		</div>
+		
+
 	</div>
 </div>
 <!-- ========== END MODALS ========== -->
@@ -421,17 +443,42 @@ body {
 $(document).ready(function(){
 	
 	$(".containerTime").click(function(){
-		onClikcPop($(this).attr("SEQ"));
+		onClikcPop($(this).attr("SEQ"), $(this).attr("TITLE") , $(this).attr("TEXT")  );
 	});
 	
-	$('#modal-close').click(function() {
-		$(this).parent().parent().parent().parent().removeClass('active');
+	$('.modal-close').click(function() {
+		// $(this).parent().parent().parent().parent().removeClass('active');
+		$(this).parent().removeClass('active');
+		onClickInit();
+		
 	});
 
 	
-    $('#btnSend').click(function(){
-		
+    $('#btnEdit').on('click', function(event){
+    	event.preventDefault();
+    	$(this).css("display", "none");
+    	
+    	
+    	$('#btnSend').css("display", "");
+    	
+    	$("#view1").css("display","none");
+    	$("#view2").css("display","none");
+    	
+
+    	$("#CONT_TITLE").attr("type","text");
+    	$("#CONT_TEXT").css("display","");
+    	
+
+    	$("#CONT_TITLE").val($("#TEMP_CONT_TITLE").val());
+    	$("#CONT_TEXT").val($("#TEMP_CONT_TEXT").val().replaceAll(/\<br>/g, '\n'));
+    	
+    	
+    });
+	
+    $('#btnSend').on('click', function(event){
+    	event.preventDefault();
     	if(!confirm('저장하시겠습니까?')) return false;
+    	
     	
       	$.ajax({
       	    url: "/board/updateBoard.do",
@@ -460,19 +507,54 @@ $(document).ready(function(){
 
 
 
-function onClikcPop(seq){
+function onClikcPop(seq,title,text){
+
+/* 	
 	var loginYN = false;
-	
 	var inputString = prompt('비밀번호를 입력하세요');
 	loginYN = true;
+*/
+	$("#USER_SEQ").val(seq);
+	$("#view1").html(title);
+	$("#view2").html(text);
 	
-	if(loginYN){
-		$("#USER_SEQ").val(seq);
-		$('#modal-window').addClass('active');
-	}
+	
+	$("#TEMP_CONT_TEXT").val(text);
+	$("#TEMP_CONT_TITLE").val(title);
+		
+	
+	/* 
+	$("#CONT_TEXT").val(text);
+
+	$("#CONT_TITLE").val(title);
+	*/
+	
+	
+
+	
+	$('#modal-window').addClass('active');
 	
 }
 
+
+// 초기화 펑션
+function onClickInit(){
+	
+	
+	$("#btnEdit").css("display", "");
+	
+	
+	$('#btnSend').css("display", "none");
+	
+	$("#view1").css("display","");
+	$("#view2").css("display","");
+	
+
+	$("#CONT_TITLE").attr("type","hidden");
+	$("#CONT_TEXT").css("display","none");
+	
+
+}
 
 </script>
 
